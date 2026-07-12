@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5083754831083040549}
   - component: {fileID: 192321924120076354}
   - component: {fileID: 5661141184181743449}
+  - component: {fileID: 6158377298324373572}
   m_Layer: 0
   m_Name: Tree
   m_TagString: Untagged
@@ -130,6 +131,18 @@ MonoBehaviour:
   treeStump: {fileID: 6719729127812246684}
   treeStumpObj: {fileID: 3565487297636106673, guid: 010f66a5e60ba0b49abb734a981d12eb, type: 3}
   falingTreeObj: {fileID: 8393883981220151312, guid: 61f6c98376410be41b142a528f185d2f, type: 3}
+--- !u!114 &6158377298324373572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2395207807670677705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29d349f482f6bc84fa93ac1be8ba33ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &7102571028082309848
 GameObject:
   m_ObjectHideFlags: 0
