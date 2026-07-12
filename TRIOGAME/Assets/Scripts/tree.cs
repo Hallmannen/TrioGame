@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class tree : MonoBehaviour
 {
-    public Transform[] Players;
 
     public float choopRange = 1;
     public Transform treeStump;
@@ -16,26 +15,53 @@ public class tree : MonoBehaviour
 
     void Update()
     {
-        RaycastHit[] Hits = Physics.SphereCastAll(treeStump.position, choopRange, Vector3.one * choopRange);
-        Debug.DrawRay(treeStump.position, new Vector3(choopRange, 0, 0));
-        Debug.DrawRay(treeStump.position, new Vector3(-choopRange, 0, 0));
-        Debug.DrawRay(treeStump.position, new Vector3(0, 0, choopRange));
-        Debug.DrawRay(treeStump.position, new Vector3(0, 0, -choopRange));
+        //RaycastHit[] Hits = Physics.SphereCastAll(treeStump.position, choopRange, new Vector3(0, -3, 0));
+        Debug.DrawRay(transform.position, new Vector3(choopRange, 0, 0));
+        Debug.DrawRay(transform.position, new Vector3(-choopRange, 0, 0));
+        Debug.DrawRay(transform.position, new Vector3(0, 0, choopRange));
+        Debug.DrawRay(transform.position, new Vector3(0, 0, -choopRange));
 
-
-        for (int i = 0; i < Hits.Length; i++)
+        // sending out 8 raycast and checking for nerby players
+        for (int i = 0; i < 8; i++)
         {
-            if (Hits[i].collider.CompareTag("Player"))
+            float angle = i * 45f * Mathf.Deg2Rad;
+            Vector3 dir = new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
+
+            Debug.DrawRay(treeStump.position, dir * choopRange, Color.red);
+
+            if (Physics.Raycast(treeStump.position, dir, out RaycastHit hit, choopRange))
             {
-                choopTree();
+                Debug.Log(hit.collider.name + " Is chooping down a tree!!");
+                if(hit.collider.CompareTag("Player"))
+                {
+                    choopTree();
+                }
             }
-            //Debug.Log(Hits[i].collider.name);
         }
 
     }
 
+    private float TreeHp = 100;
+
     public void choopTree()
     {
-        Debug.Log("Chooping down tree! ");
+        if(TreeHp <= 0)
+        {
+            Destroy(this.gameObject);
+            Debug.Log("Chooping down tree! ");
+        }
+        else
+        {
+            TreeHp -= Time.deltaTime * 100f;
+        }
+
     }
+
+    private void OnDestroy()
+    {
+        Instantiate(treeStumpObj, treeStump.position, Quaternion.identity);
+        Instantiate(falingTreeObj, transform.position + transform.up, Quaternion.identity);
+
+    }
+
 }
