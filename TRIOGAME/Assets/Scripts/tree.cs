@@ -16,10 +16,13 @@ public class tree : MonoBehaviour
     void Update()
     {
         //RaycastHit[] Hits = Physics.SphereCastAll(treeStump.position, choopRange, new Vector3(0, -3, 0));
+
+        /*
         Debug.DrawRay(transform.position, new Vector3(choopRange, 0, 0));
         Debug.DrawRay(transform.position, new Vector3(-choopRange, 0, 0));
         Debug.DrawRay(transform.position, new Vector3(0, 0, choopRange));
         Debug.DrawRay(transform.position, new Vector3(0, 0, -choopRange));
+        */
 
         // sending out 8 raycast and checking for nerby players
         for (int i = 0; i < 8; i++)
@@ -31,8 +34,8 @@ public class tree : MonoBehaviour
 
             if (Physics.Raycast(treeStump.position, dir, out RaycastHit hit, choopRange))
             {
-                Debug.Log(hit.collider.name + " Is chooping down a tree!!");
-                if(hit.collider.CompareTag("Player"))
+                //Debug.Log(hit.collider.name + " Is chooping down a tree!!");
+                if (hit.collider.CompareTag("Player"))
                 {
                     choopTree();
                 }
@@ -45,7 +48,7 @@ public class tree : MonoBehaviour
 
     public void choopTree()
     {
-        if(TreeHp <= 0)
+        if (TreeHp <= 0)
         {
             Destroy(this.gameObject);
             Debug.Log("Chooping down tree! ");
