@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-public class PlayerMovement : MonoBehaviour
+public class Player_Movement : MonoBehaviour
 {
     public float maxSpeed = 6f;
     public float acceleration = 15f;
