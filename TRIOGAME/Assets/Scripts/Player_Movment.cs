@@ -1,16 +1,23 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player_Movment : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public Rigidbody RB;
+    public CharacterController CC;
+
     void Start()
     {
-        Debug.Log("Nu startar spelet");
+
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-       Debug.Log("nejsan hejsan??!");
+        //if ()
+        {
+            
+        }
+
+        
     }
 }
