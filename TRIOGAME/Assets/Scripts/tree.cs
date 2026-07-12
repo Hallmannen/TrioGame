@@ -35,6 +35,6 @@ public class tree : MonoBehaviour
 
     public void choopTree()
     {
-        Debug.Log("Chooping down tree!");
+        Debug.Log("Chooping down tree! ");
     }
 }
