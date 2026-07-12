@@ -8,7 +8,7 @@ public class Player_Movement : MonoBehaviour
     public float deceleration = 20f;
     public float rotationSpeed = 10f;
     public float GrabRange = 1f;
-
+    public Vector3 GrabPosition;
     public CharacterController controller;
     private Vector3 velocity;
 
@@ -32,6 +32,7 @@ public class Player_Movement : MonoBehaviour
 
             if (Physics.Raycast(rayOrigin, dir, out RaycastHit hit, GrabRange) && hit.collider.CompareTag("FalenTree") && Keyboard.current.eKey.isPressed)
             {
+                GrabPosition = hit.collider.transform.position;
                 Debug.Log(hit.collider.name + " is in range!");
             }
         }
