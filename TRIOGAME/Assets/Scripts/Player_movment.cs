@@ -1,14 +1,16 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player_movment : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public Rigidbody RB;
+    public CharacterController CC;
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
