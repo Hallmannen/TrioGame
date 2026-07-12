@@ -302,7 +302,7 @@ GameObject:
   - component: {fileID: 886065410}
   - component: {fileID: 886065411}
   m_Layer: 0
-  m_Name: Cylinder
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -392,9 +392,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da602a878a883b64c8e0a3f927e56b14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  Mspeed: 3
-  RB: {fileID: 0}
-  CC: {fileID: 886065411}
+  SPEED: 3
+  Rigidbody: {fileID: 0}
+  CharacterController: {fileID: 886065411}
 --- !u!143 &886065411
 CharacterController:
   m_ObjectHideFlags: 0
