@@ -62,8 +62,8 @@ public class tree : MonoBehaviour
 
     private void OnDestroy()
     {
-        Instantiate(treeStumpObj, treeStump.position, Quaternion.identity);
-        Instantiate(falingTreeObj, transform.position + transform.up, Quaternion.identity);
+        Instantiate(treeStumpObj, treeStump.position, Quaternion.Euler(0, 45, 0));
+        Instantiate(falingTreeObj, transform.position + transform.up, Quaternion.Euler(0, 45, 0));
 
     }
 
