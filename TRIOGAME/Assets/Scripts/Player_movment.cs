@@ -5,6 +5,7 @@ public class Player_Movement : MonoBehaviour
     public float maxSpeed = 6f;
     public float acceleration = 15f;
     public float deceleration = 20f;
+    public float rotationSpeed = 10f;
 
     public CharacterController controller;
     private Vector3 velocity;
@@ -40,6 +41,12 @@ public class Player_Movement : MonoBehaviour
 
         velocity = Vector3.MoveTowards(velocity, targetVelocity, rate * Time.deltaTime);
 
+        //Add rotation to the player based on the input direction
+        if (velocity.magnitude > 0.1f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(velocity);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        }
 
         controller.SimpleMove(velocity);
     }
