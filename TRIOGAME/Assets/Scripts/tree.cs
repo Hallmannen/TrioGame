@@ -16,7 +16,7 @@ public class tree : MonoBehaviour
 
     void Update()
     {
-        RaycastHit[] Hits = Physics.SphereCastAll(treeStump.position, choopRange, Vector3.zero);
+        RaycastHit[] Hits = Physics.SphereCastAll(treeStump.position, choopRange, Vector3.one * choopRange);
         Debug.DrawRay(treeStump.position, new Vector3(choopRange, 0, 0));
         Debug.DrawRay(treeStump.position, new Vector3(-choopRange, 0, 0));
         Debug.DrawRay(treeStump.position, new Vector3(0, 0, choopRange));
@@ -29,6 +29,7 @@ public class tree : MonoBehaviour
             {
                 choopTree();
             }
+            //Debug.Log(Hits[i].collider.name);
         }
 
     }
