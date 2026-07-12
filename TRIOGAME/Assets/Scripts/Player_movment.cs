@@ -26,9 +26,11 @@ public class Player_Movement : MonoBehaviour
 
             Vector3 dir = new Vector3(Mathf.Sin(angle), 0f, Mathf.Cos(angle));
 
-            Debug.DrawRay(transform.position, dir * GrabRange, Color.red);
+            Vector3 rayOrigin = transform.position + Vector3.down * 0.5f;
 
-            if (Physics.Raycast(transform.position, dir, out RaycastHit hit, GrabRange))
+            Debug.DrawRay(rayOrigin, dir * GrabRange, Color.red);
+
+            if (Physics.Raycast(rayOrigin, dir, out RaycastHit hit, GrabRange) && hit.collider.CompareTag("FalenTree") && Keyboard.current.eKey.isPressed)
             {
                 Debug.Log(hit.collider.name + " is in range!");
             }
