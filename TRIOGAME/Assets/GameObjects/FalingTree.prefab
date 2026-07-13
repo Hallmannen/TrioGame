@@ -105,7 +105,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29d349f482f6bc84fa93ac1be8ba33ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::logGrip
-  Rigidbody: {fileID: -1486579963403110666}
+  GrabPoint: {fileID: 0}
+  rigidbody: {fileID: -1486579963403110666}
+  ShuldAddForce: 0
 --- !u!54 &-1486579963403110666
 Rigidbody:
   m_ObjectHideFlags: 0

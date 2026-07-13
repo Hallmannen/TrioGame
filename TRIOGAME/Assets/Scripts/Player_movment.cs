@@ -9,11 +9,12 @@ public class Player_Movement : MonoBehaviour
     public float rotationSpeed = 10f;
     public float Grabforce = 0.3f;
     public float GrabRange = 1f;
-    public Vector3 GrabPositionOffset = new Vector3(0, 0, 0);
+    public Vector3 GrabPositionOffset = new Vector3(1, 1, 0);
     public CharacterController controller;
     public GameObject Log;
     private Vector3 velocity;
     public bool isGrabbing = false;
+    public Vector3 pos;
 
     void Update()
     {
@@ -22,21 +23,28 @@ public class Player_Movement : MonoBehaviour
     }
     void PickupHandeler()
     {
-        for (int i = -1; i <= 1; i++) // creating 3 rays to se what the player is trying to grab
+        if (Keyboard.current.eKey.wasPressedThisFrame)
         {
-            float angle = (transform.eulerAngles.y + i * 30) * Mathf.Deg2Rad;
+            isGrabbing = !isGrabbing;
+        }
 
-            Vector3 dir = new Vector3(Mathf.Sin(angle), 0f, Mathf.Cos(angle));
+        Vector3 GrabPostion = transform.position + transform.TransformDirection(GrabPositionOffset);
 
-            Vector3 rayOrigin = transform.position + Vector3.down * 0.5f;
+        float angle = transform.eulerAngles.y * Mathf.Deg2Rad;
 
-            Debug.DrawRay(rayOrigin, dir * GrabRange, Color.red);
+        Vector3 dir = new Vector3(Mathf.Sin(angle), 0f, Mathf.Cos(angle));
+        Vector3 rayOrigin = transform.position + transform.up * -0.4f;
 
-            if (Physics.Raycast(rayOrigin, dir, out RaycastHit hit, GrabRange) && hit.collider.CompareTag("FalenTree") && Keyboard.current.eKey.isPressed)
-            {
-                Log = GameObject.Find(hit.collider.name);
-                Log.GetComponent<logGrip>().OnPlayerHoldingTree(Grabforce, transform.position + GrabPositionOffset);
-            }
+        Debug.DrawRay(rayOrigin, dir * GrabRange, Color.red);
+
+        if (Physics.Raycast(rayOrigin, dir, out RaycastHit hit, GrabRange) && hit.collider.CompareTag("FalenTree"))
+        {
+            Log = hit.collider.gameObject;
+            pos = hit.point;
+        }
+        if (Log != null && isGrabbing)
+        {
+            Log.GetComponent<logGrip>().OnPlayerHoldingTree(Grabforce, GrabPostion, pos);
         }
     }
 
