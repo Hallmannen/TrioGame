@@ -7,11 +7,13 @@ public class Player_Movement : MonoBehaviour
     public float acceleration = 15f;
     public float deceleration = 20f;
     public float rotationSpeed = 10f;
+    public float Grabforce = 0.3f;
     public float GrabRange = 1f;
-    public Vector3 GrabPosition;
+    public Vector3 GrabPositionOffset = new Vector3(0, 0, 0);
     public CharacterController controller;
+    public GameObject Log;
     private Vector3 velocity;
-
+    public bool isGrabbing = false;
 
     void Update()
     {
@@ -20,7 +22,7 @@ public class Player_Movement : MonoBehaviour
     }
     void PickupHandeler()
     {
-        for (int i = -1; i <= 1; i++)
+        for (int i = -1; i <= 1; i++) // creating 3 rays to se what the player is trying to grab
         {
             float angle = (transform.eulerAngles.y + i * 30) * Mathf.Deg2Rad;
 
@@ -32,8 +34,8 @@ public class Player_Movement : MonoBehaviour
 
             if (Physics.Raycast(rayOrigin, dir, out RaycastHit hit, GrabRange) && hit.collider.CompareTag("FalenTree") && Keyboard.current.eKey.isPressed)
             {
-                GrabPosition = hit.collider.transform.position;
-                Debug.Log(hit.collider.name + " is in range!");
+                Log = GameObject.Find(hit.collider.name);
+                Log.GetComponent<logGrip>().OnPlayerHoldingTree(Grabforce, transform.position + GrabPositionOffset);
             }
         }
     }
