@@ -4,10 +4,17 @@ public class logGrip : MonoBehaviour
 {
     public Rigidbody rigidbody;
     public bool ShuldAddForce = false;
-    public void OnPlayerHoldingTree(float Grabforce, Vector3 world_TargetPosition, Vector3 GrabPostition)
+    public void OnPlayerHoldingTree(float Grabforce, Vector3 targetPosition, Vector3 grabPoint)
     {
-        Vector3 CurentPos = (world_TargetPosition - GrabPostition) * Grabforce;
+        if (rigidbody == null)
+        {
+            Debug.LogError("Ingen Rigidbody!");
+            return;
+        }
+        Vector3 CurentPos = (targetPosition - grabPoint) * Grabforce;
 
-        rigidbody.AddForceAtPosition(CurentPos, GrabPostition);
+        rigidbody.AddForceAtPosition(CurentPos, grabPoint);
+
+
     }
 }

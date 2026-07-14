@@ -1,4 +1,5 @@
-using Unity.Mathematics;
+using NUnit.Framework;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public class Player_Movement : MonoBehaviour
@@ -7,14 +8,17 @@ public class Player_Movement : MonoBehaviour
     public float acceleration = 15f;
     public float deceleration = 20f;
     public float rotationSpeed = 10f;
-    public float Grabforce = 0.3f;
+    public float Grabforce = 20f;
     public float GrabRange = 1f;
     public Vector3 GrabPositionOffset = new Vector3(1, 1, 0);
     public CharacterController controller;
     public GameObject Log;
     private Vector3 velocity;
     public bool isGrabbing = false;
-    public Vector3 pos;
+    private RaycastHit hit;
+    private Vector3 localGrabPoint;
+    private Vector3 worldGrabPoint;
+    public float GrabSpedSlowMultiplayer;
 
     void Update()
     {
@@ -23,31 +27,40 @@ public class Player_Movement : MonoBehaviour
     }
     void PickupHandeler()
     {
+        DrawRayForPlayer();
         if (Keyboard.current.eKey.wasPressedThisFrame)
         {
             isGrabbing = !isGrabbing;
         }
 
-        Vector3 GrabPostion = transform.position + transform.TransformDirection(GrabPositionOffset);
-
+    }
+    void DrawRayForPlayer()
+    {
         float angle = transform.eulerAngles.y * Mathf.Deg2Rad;
-
         Vector3 dir = new Vector3(Mathf.Sin(angle), 0f, Mathf.Cos(angle));
         Vector3 rayOrigin = transform.position + transform.up * -0.4f;
 
-        Debug.DrawRay(rayOrigin, dir * GrabRange, Color.red);
-
-        if (Physics.Raycast(rayOrigin, dir, out RaycastHit hit, GrabRange) && hit.collider.CompareTag("FalenTree"))
+        if (Physics.Raycast(rayOrigin, dir, out hit, GrabRange)) // here i is where the ray is created
         {
-            Log = hit.collider.gameObject;
-            pos = hit.point;
+            if (!isGrabbing && hit.collider.CompareTag("FalenTree"))
+            {
+                Log = hit.collider.gameObject;
+                if (Log != null) // checs so i aculy have a log to do transform on
+                {
+                    localGrabPoint = Log.transform.InverseTransformPoint(hit.point);
+                }
+            }
         }
         if (Log != null && isGrabbing)
         {
-            Log.GetComponent<logGrip>().OnPlayerHoldingTree(Grabforce, GrabPostion, pos);
+            Vector3 targetPosition = transform.position + transform.TransformDirection(GrabPositionOffset); // this and the row below updated the postition so it moves with the player
+            worldGrabPoint = Log.transform.TransformPoint(localGrabPoint);
+
+            Debug.DrawLine(rayOrigin, worldGrabPoint, Color.red); // added a debug så we can se where the player has grabd the tree
+
+            Log.GetComponent<logGrip>().OnPlayerHoldingTree(Grabforce, targetPosition, worldGrabPoint); // here i say where the log huld go
         }
     }
-
     void MoveHandeler()
     {
         Vector2 input = Vector2.zero;
@@ -78,8 +91,21 @@ public class Player_Movement : MonoBehaviour
 
         velocity = Vector3.MoveTowards(velocity, targetVelocity, rate * Time.deltaTime);
 
+        //if the player is holding a log then it shuld look towards the log
+        if (isGrabbing && Log != null)
+        {
+            velocity *= GrabSpedSlowMultiplayer;
+            Vector3 direction = worldGrabPoint - transform.position;
+            direction.y = 0f; // Ignorera höjdskillnad
+
+            if (direction.sqrMagnitude > 0.01f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(direction);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            }
+        }
         //Add rotation to the player based on the input direction
-        if (velocity.magnitude > 0.1f)
+        else if (velocity.magnitude > 0.1f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(velocity);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
