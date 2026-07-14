@@ -1,4 +1,4 @@
-using NUnit.Framework;
+//using NUnit.Framework;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -20,6 +20,12 @@ public class Player_Movement : MonoBehaviour
     private Vector3 worldGrabPoint;
     public float GrabSpedSlowMultiplayer;
 
+    public float minLogStuckRange = 1;
+    public float maxLogStuckRange = 5f;
+    [Range(1f, 10f)]
+    private float logStuck_moveModifier;
+    private bool NotImportantBool = false; // its not important but do not remove <----
+
     void Update()
     {
         MoveHandeler();
@@ -30,7 +36,7 @@ public class Player_Movement : MonoBehaviour
         DrawRayForPlayer();
         if (Keyboard.current.eKey.wasPressedThisFrame)
         {
-            isGrabbing = !isGrabbing;
+            Interact();
         }
 
     }
@@ -51,6 +57,23 @@ public class Player_Movement : MonoBehaviour
                 }
             }
         }
+
+        #region logStuck_moveModifier
+        logStuck_moveModifier = 1;
+
+        if (isGrabbing)
+        {
+            float distanceToLog = Vector3.Distance(rayOrigin, worldGrabPoint);
+            logStuck_moveModifier = (minLogStuckRange / distanceToLog + 1) - distanceToLog / maxLogStuckRange;
+            logStuck_moveModifier = Mathf.Clamp(logStuck_moveModifier, 0.1f, 1f);
+            if(logStuck_moveModifier == 0.1f && NotImportantBool) // to far from log and lossing grip
+            {
+                Interact();
+            }
+            NotImportantBool = true; // its not important but do not remove <----
+        }
+        #endregion
+
         if (Log != null && isGrabbing)
         {
             Vector3 targetPosition = transform.position + transform.TransformDirection(GrabPositionOffset); // this and the row below updated the postition so it moves with the player
@@ -111,6 +134,14 @@ public class Player_Movement : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
-        controller.SimpleMove(velocity);
+
+        controller.SimpleMove(velocity * logStuck_moveModifier);
+    }
+
+    void Interact()
+    {
+        NotImportantBool = false;
+        isGrabbing = !isGrabbing;
+
     }
 }
