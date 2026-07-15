@@ -13,7 +13,7 @@ public class Player_Movement : MonoBehaviour
     public Vector3 GrabPositionOffset = new Vector3(1, 1, 0);
     public CharacterController controller;
     public GameObject Log;
-    private Vector3 velocity;
+    private Vector3 PlayerPosition;
     public bool isGrabbing = false;
     private RaycastHit hit;
     private Vector3 localGrabPoint;
@@ -66,7 +66,7 @@ public class Player_Movement : MonoBehaviour
             float distanceToLog = Vector3.Distance(rayOrigin, worldGrabPoint);
             logStuck_moveModifier = minLogStuckRange / distanceToLog + 1 - distanceToLog / maxLogStuckRange;
             logStuck_moveModifier = Mathf.Clamp(logStuck_moveModifier, 0.1f, 1f);
-            if(logStuck_moveModifier == 0.1f && NotImportantBool) // to far from log and lossing grip
+            if (logStuck_moveModifier == 0.1f && NotImportantBool) // to far from log and lossing grip
             {
                 Interact();
             }
@@ -112,12 +112,12 @@ public class Player_Movement : MonoBehaviour
 
         float rate = targetVelocity.magnitude > 0 ? acceleration : deceleration;
 
-        velocity = Vector3.MoveTowards(velocity, targetVelocity, rate * Time.deltaTime);
+        PlayerPosition = Vector3.MoveTowards(PlayerPosition, targetVelocity, rate * Time.deltaTime);
 
         //if the player is holding a log then it shuld look towards the log
         if (isGrabbing && Log != null)
         {
-            velocity *= GrabSpedSlowMultiplayer;
+            PlayerPosition *= GrabSpedSlowMultiplayer;
             Vector3 direction = worldGrabPoint - transform.position;
             direction.y = 0f; // Ignorera höjdskillnad
 
@@ -128,14 +128,14 @@ public class Player_Movement : MonoBehaviour
             }
         }
         //Add rotation to the player based on the input direction
-        else if (velocity.magnitude > 0.1f)
+        else if (PlayerPosition.magnitude > 0.1f)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(velocity);
+            Quaternion targetRotation = Quaternion.LookRotation(PlayerPosition);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
 
-        controller.SimpleMove(velocity * logStuck_moveModifier);
+        controller.SimpleMove(PlayerPosition * logStuck_moveModifier);
     }
 
     void Interact()
