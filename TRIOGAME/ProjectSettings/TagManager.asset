@@ -5,11 +5,12 @@ TagManager:
   serializedVersion: 3
   tags:
   - FalenTree
+  - Water
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Log
   - Water
   - UI
   - 

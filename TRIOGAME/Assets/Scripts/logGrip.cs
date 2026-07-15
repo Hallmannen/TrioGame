@@ -15,6 +15,6 @@ public class logGrip : MonoBehaviour
 
         rigidbody.AddForceAtPosition(CurentPos, grabPoint);
 
-
     }
+
 }
