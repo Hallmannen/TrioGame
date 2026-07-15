@@ -64,7 +64,7 @@ public class Player_Movement : MonoBehaviour
         if (isGrabbing)
         {
             float distanceToLog = Vector3.Distance(rayOrigin, worldGrabPoint);
-            logStuck_moveModifier = (minLogStuckRange / distanceToLog + 1) - distanceToLog / maxLogStuckRange;
+            logStuck_moveModifier = minLogStuckRange / distanceToLog + 1 - distanceToLog / maxLogStuckRange;
             logStuck_moveModifier = Mathf.Clamp(logStuck_moveModifier, 0.1f, 1f);
             if(logStuck_moveModifier == 0.1f && NotImportantBool) // to far from log and lossing grip
             {

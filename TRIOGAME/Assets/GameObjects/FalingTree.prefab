@@ -66,8 +66,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38182708395904d46bc91766e304d21e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaterControler
-  waterForce: 5
-  targetXOffset: 10
+  waterForce: 7
+  targetXOffset: 5
 --- !u!1 &6245533620391867755
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,8 +134,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38182708395904d46bc91766e304d21e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaterControler
-  waterForce: 5
-  targetXOffset: 10
+  waterForce: 7
+  targetXOffset: 5
 --- !u!1 &8393883981220151312
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,5 +360,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38182708395904d46bc91766e304d21e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  waterForce: 5
-  targetXOffset: 10
+  waterForce: 7
+  targetXOffset: 5
