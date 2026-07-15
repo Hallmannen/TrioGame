@@ -7,7 +7,6 @@ public class WaterControler : MonoBehaviour
     private Transform logTransform;
 
     private Vector3 targetPosition;
-    public float targetXOffset;
     private Vector3 forceDir;
 
     void Awake()
@@ -15,13 +14,18 @@ public class WaterControler : MonoBehaviour
         logRB = GetComponentInParent<Rigidbody>();
         logTransform = logRB.transform;
     }
-
-
-
     void Update()
     {
-        targetPosition = new Vector3(logTransform.position.x + targetXOffset, logTransform.position.y, Water.position.z);
-        forceDir = targetPosition - transform.position;
+        if (Water == null) return;
+
+        Vector3 LocalLogPosition = Water.InverseTransformPoint(logTransform.position);
+
+        LocalLogPosition.x += 1;
+        LocalLogPosition.z = 0f;
+
+        targetPosition = Water.TransformPoint(LocalLogPosition);
+
+        forceDir = waterForce * (targetPosition - transform.position).normalized;
     }
 
     private Transform Water;
@@ -31,7 +35,7 @@ public class WaterControler : MonoBehaviour
         {
             Water = other.gameObject.transform;
 
-            logRB.AddForceAtPosition(forceDir.normalized * waterForce, transform.position); //ForceMode.VelocityChange;
+            logRB.AddForceAtPosition(forceDir, transform.position); //ForceMode.VelocityChange;
         }
     }
 }

@@ -18,8 +18,6 @@ public class Player_Movement : MonoBehaviour
     private RaycastHit hit;
     private Vector3 localGrabPoint;
     private Vector3 worldGrabPoint;
-    public float GrabSpedSlowMultiplayer;
-
     public float minLogStuckRange = 1;
     public float maxLogStuckRange = 5f;
     [Range(1f, 10f)]
@@ -117,7 +115,6 @@ public class Player_Movement : MonoBehaviour
         //if the player is holding a log then it shuld look towards the log
         if (isGrabbing && Log != null)
         {
-            PlayerPosition *= GrabSpedSlowMultiplayer;
             Vector3 direction = worldGrabPoint - transform.position;
             direction.y = 0f; // Ignorera höjdskillnad
 
