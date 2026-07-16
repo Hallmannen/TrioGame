@@ -22,13 +22,15 @@ public class Player_Movement : MonoBehaviour
     public float maxLogStuckRange = 5f;
     [Range(1f, 10f)]
     private float logStuck_moveModifier;
-    private bool NotImportantBool = false; // its not important but do not remove <----
-
+    private bool CanGrabBool = false;
+    public Vector3 rayOrigin;
     void Update()
     {
-        MoveHandeler();
-        PickupHandeler();
+        MoveHandeler(); // MovmentHandeler is in Region Handel_Movnent
+        PickupHandeler(); // Pickuphandeler is in Handel_Grabing_stuff
     }
+
+    #region Handel_Grabing_stuff
     void PickupHandeler()
     {
         DrawRayForPlayer();
@@ -42,7 +44,7 @@ public class Player_Movement : MonoBehaviour
     {
         float angle = transform.eulerAngles.y * Mathf.Deg2Rad;
         Vector3 dir = new Vector3(Mathf.Sin(angle), 0f, Mathf.Cos(angle));
-        Vector3 rayOrigin = transform.position + transform.up * -0.4f;
+        rayOrigin = transform.position + transform.up * -0.4f;
 
         if (Physics.Raycast(rayOrigin, dir, out hit, GrabRange)) // here i is where the ray is created
         {
@@ -56,21 +58,7 @@ public class Player_Movement : MonoBehaviour
             }
         }
 
-        #region logStuck_moveModifier
-        logStuck_moveModifier = 1;
-
-        if (isGrabbing)
-        {
-            float distanceToLog = Vector3.Distance(rayOrigin, worldGrabPoint);
-            logStuck_moveModifier = minLogStuckRange / distanceToLog + 1 - distanceToLog / maxLogStuckRange;
-            logStuck_moveModifier = Mathf.Clamp(logStuck_moveModifier, 0.1f, 1f);
-            if (logStuck_moveModifier == 0.1f && NotImportantBool) // to far from log and lossing grip
-            {
-                Interact();
-            }
-            NotImportantBool = true; // its not important but do not remove <----
-        }
-        #endregion
+        CalculateLogStuckMoveModifier();
 
         if (Log != null && isGrabbing)
         {
@@ -82,6 +70,29 @@ public class Player_Movement : MonoBehaviour
             Log.GetComponent<logGrip>().OnPlayerHoldingTree(Grabforce, targetPosition, worldGrabPoint); // here i say where the log huld go
         }
     }
+    void CalculateLogStuckMoveModifier()
+    {
+        logStuck_moveModifier = 1;
+
+        if (isGrabbing)
+        {
+            float distanceToLog = Vector3.Distance(rayOrigin, worldGrabPoint);
+            logStuck_moveModifier = minLogStuckRange / distanceToLog + 1 - distanceToLog / maxLogStuckRange;
+            logStuck_moveModifier = Mathf.Clamp(logStuck_moveModifier, 0.1f, 1f);
+            if (logStuck_moveModifier == 0.1f && CanGrabBool) // to far from log and lossing grip
+            {
+                Interact();
+            }
+            CanGrabBool = true;
+        }
+    }
+    void Interact()
+    {
+        CanGrabBool = false;
+        isGrabbing = !isGrabbing;
+    }
+    #endregion
+    #region Handel_Movement
     void MoveHandeler()
     {
         Vector2 input = Vector2.zero;
@@ -134,11 +145,5 @@ public class Player_Movement : MonoBehaviour
 
         controller.SimpleMove(PlayerPosition * logStuck_moveModifier);
     }
-
-    void Interact()
-    {
-        NotImportantBool = false;
-        isGrabbing = !isGrabbing;
-
-    }
+    #endregion
 }
