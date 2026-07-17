@@ -2,17 +2,12 @@ using UnityEngine;
 
 public class tree : MonoBehaviour
 {
-
     public float choopRange = 1;
+    public int RayAmounts = 8;
     public Transform treeStump;
-
     public GameObject treeStumpObj;
     public GameObject falingTreeObj;
-
-    void Start()
-    {
-    }
-
+    private float TreeHp = 100;
     void Update()
     {
         //RaycastHit[] Hits = Physics.SphereCastAll(treeStump.position, choopRange, new Vector3(0, -3, 0));
@@ -25,7 +20,7 @@ public class tree : MonoBehaviour
         */
 
         // sending out 8 raycast and checking for nerby players
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < RayAmounts; i++)
         {
             float angle = i * 45f * Mathf.Deg2Rad;
             Vector3 dir = new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
@@ -43,14 +38,12 @@ public class tree : MonoBehaviour
         }
 
     }
-
-    private float TreeHp = 100;
-
     public void choopTree()
     {
         if (TreeHp <= 0)
         {
             Destroy(this.gameObject);
+            SpawnTreeparts();
             Debug.Log("Chooping down tree! ");
         }
         else
@@ -59,12 +52,9 @@ public class tree : MonoBehaviour
         }
 
     }
-
-    private void OnDestroy()
+    void SpawnTreeparts()
     {
         Instantiate(treeStumpObj, treeStump.position, Quaternion.Euler(0, 45, 0));
         Instantiate(falingTreeObj, transform.position + transform.up, Quaternion.Euler(0, 45, 0));
-
     }
-
 }

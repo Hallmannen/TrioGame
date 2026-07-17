@@ -7,7 +7,6 @@ public class TreeSpawner : MonoBehaviour
     public int AmountOfTrees = 10;
     public LayerMask Ground;
     private readonly float TreeSpawnYoffset = 2.9669368f; // this offset is so the tree is not in the ground when i spawnds a new tree
-
     void Start()
     {
         SpawnTrees();
@@ -36,7 +35,7 @@ public class TreeSpawner : MonoBehaviour
 
         if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, 100f, Ground))
         {
-            Instantiate(TreePrefab, hit.point + new Vector3(0, TreeSpawnYoffset, 0), TreePrefab.transform.rotation, transform);
+            Instantiate(TreePrefab, hit.point + transform.up * TreeSpawnYoffset, TreePrefab.transform.rotation, transform);
             return true;
         }
         else return false;
