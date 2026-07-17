@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TreeSpawner : MonoBehaviour
+public class ForestSpawner : MonoBehaviour
 {
     public GameObject TreePrefab;
     public BoxCollider SpawnArea;

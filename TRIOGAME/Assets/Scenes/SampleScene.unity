@@ -444,7 +444,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83a6b5de21bc8284e92b9bbc43471a90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TreeSpawner
-  TreePrefab: {fileID: 2395207807670677705, guid: 165665b6333f718499b41c3d90a738de, type: 3}
+  TreePrefab:
+  - {fileID: 2395207807670677705, guid: 165665b6333f718499b41c3d90a738de, type: 3}
+  GrassPrefabs:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  StonePrefabs: []
   SpawnArea: {fileID: 970401792}
   AmountOfTrees: 10
   Ground:

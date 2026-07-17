@@ -7,7 +7,12 @@ public class tree : MonoBehaviour
     public Transform treeStump;
     public GameObject treeStumpObj;
     public GameObject falingTreeObj;
+    private readonly float TreeSpawnYoffset = 2.9669368f; // this offset is so the tree is not in the ground when i spawnds a new tree
     private float TreeHp = 100;
+    void Start()
+    {
+        transform.position += Vector3.up * TreeSpawnYoffset;
+    }
     void Update()
     {
         //RaycastHit[] Hits = Physics.SphereCastAll(treeStump.position, choopRange, new Vector3(0, -3, 0));
