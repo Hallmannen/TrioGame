@@ -1,4 +1,3 @@
-//using NUnit.Framework;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -20,7 +19,6 @@ public class Player_Movement : MonoBehaviour
     private Vector3 worldGrabPoint;
     public float minLogStuckRange = 1;
     public float maxLogStuckRange = 5f;
-    [Range(1f, 10f)]
     private float logStuck_moveModifier;
     private bool CanGrabBool = false;
     public Vector3 rayOrigin;
@@ -46,6 +44,8 @@ public class Player_Movement : MonoBehaviour
         Vector3 dir = new Vector3(Mathf.Sin(angle), 0f, Mathf.Cos(angle));
         rayOrigin = transform.position + transform.up * -0.4f;
 
+        Debug.DrawLine(rayOrigin, rayOrigin + transform.forward * GrabRange, Color.red);
+
         if (Physics.Raycast(rayOrigin, dir, out hit, GrabRange)) // here i is where the ray is created
         {
             if (!isGrabbing && hit.collider.CompareTag("FalenTree"))
@@ -58,10 +58,12 @@ public class Player_Movement : MonoBehaviour
             }
         }
 
-        CalculateLogStuckMoveModifier();
+        logStuck_moveModifier = 1;
 
         if (Log != null && isGrabbing)
         {
+            CalculateLogStuckMoveModifier();
+
             Vector3 targetPosition = transform.position + transform.TransformDirection(GrabPositionOffset); // this and the row below updated the postition so it moves with the player
             worldGrabPoint = Log.transform.TransformPoint(localGrabPoint);
 
@@ -72,24 +74,22 @@ public class Player_Movement : MonoBehaviour
     }
     void CalculateLogStuckMoveModifier()
     {
-        logStuck_moveModifier = 1;
+        float distanceToLog = Vector3.Distance(rayOrigin, worldGrabPoint);
+        logStuck_moveModifier = minLogStuckRange / distanceToLog + 1 - distanceToLog / maxLogStuckRange;
+        logStuck_moveModifier = Mathf.Clamp(logStuck_moveModifier, 0.1f, 1f);
 
-        if (isGrabbing)
+        if (logStuck_moveModifier == 0.1f && CanGrabBool) // to far from log and lossing grip
         {
-            float distanceToLog = Vector3.Distance(rayOrigin, worldGrabPoint);
-            logStuck_moveModifier = minLogStuckRange / distanceToLog + 1 - distanceToLog / maxLogStuckRange;
-            logStuck_moveModifier = Mathf.Clamp(logStuck_moveModifier, 0.1f, 1f);
-            if (logStuck_moveModifier == 0.1f && CanGrabBool) // to far from log and lossing grip
-            {
-                Interact();
-            }
-            CanGrabBool = true;
+            Interact();
         }
+        CanGrabBool = true;
     }
     void Interact()
     {
         CanGrabBool = false;
         isGrabbing = !isGrabbing;
+
+        if (!isGrabbing) Log = null;
     }
     #endregion
     #region Handel_Movement
