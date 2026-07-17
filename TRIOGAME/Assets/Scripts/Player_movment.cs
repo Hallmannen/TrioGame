@@ -42,37 +42,6 @@ public class Player_Movement : MonoBehaviour
     }
     void DrawRayForPlayer()
     {
-        CalculateLogStuckMoveModifier();
-
-        if (Log != null && isGrabbing)
-        {
-            Vector3 targetPosition = transform.position + transform.TransformDirection(GrabPositionOffset); // this and the row below updated the postition so it moves with the player
-            worldGrabPoint = Log.transform.TransformPoint(localGrabPoint);
-
-            Debug.DrawLine(rayOrigin, worldGrabPoint, Color.red); // added a debug så we can se where the player has grabd the tree
-
-            Log.GetComponent<logGrip>().OnPlayerHoldingTree(Grabforce, targetPosition, worldGrabPoint); // here i say where the log huld go
-        }
-    }
-    void CalculateLogStuckMoveModifier()
-    {
-        logStuck_moveModifier = 1;
-
-        if (isGrabbing)
-        {
-            float distanceToLog = Vector3.Distance(rayOrigin, worldGrabPoint);
-            logStuck_moveModifier = minLogStuckRange / distanceToLog + 1 - distanceToLog / maxLogStuckRange;
-            logStuck_moveModifier = Mathf.Clamp(logStuck_moveModifier, 0.1f, 1f);
-            if (logStuck_moveModifier == 0.1f && CanGrabBool) // to far from log and lossing grip
-            {
-                CanGrabBool = false;
-                isGrabbing = !isGrabbing;
-            }
-            CanGrabBool = true;
-        }
-    }
-    void Interact()
-    {
         float angle = transform.eulerAngles.y * Mathf.Deg2Rad;
         Vector3 dir = new Vector3(Mathf.Sin(angle), 0f, Mathf.Cos(angle));
         rayOrigin = transform.position + transform.up * -0.4f;
@@ -88,6 +57,38 @@ public class Player_Movement : MonoBehaviour
                 }
             }
         }
+
+        logStuck_moveModifier = 1;
+
+        if (Log != null && isGrabbing)
+        {
+            CalculateLogStuckMoveModifier();
+
+            Vector3 targetPosition = transform.position + transform.TransformDirection(GrabPositionOffset); // this and the row below updated the postition so it moves with the player
+            worldGrabPoint = Log.transform.TransformPoint(localGrabPoint);
+
+            Debug.DrawLine(rayOrigin, worldGrabPoint, Color.red); // added a debug så we can se where the player has grabd the tree
+
+            Log.GetComponent<logGrip>().OnPlayerHoldingTree(Grabforce, targetPosition, worldGrabPoint); // here i say where the log huld go
+        }
+    }
+    void CalculateLogStuckMoveModifier()
+    {
+        float distanceToLog = Vector3.Distance(rayOrigin, worldGrabPoint);
+        logStuck_moveModifier = minLogStuckRange / distanceToLog + 1 - distanceToLog / maxLogStuckRange;
+        logStuck_moveModifier = Mathf.Clamp(logStuck_moveModifier, 0.1f, 1f);
+        if (logStuck_moveModifier == 0.1f && CanGrabBool) // to far from log and lossing grip
+        {
+            Interact();
+        }
+        CanGrabBool = true;
+    }
+    void Interact()
+    {
+        CanGrabBool = false;
+        isGrabbing = !isGrabbing;
+
+        if (!isGrabbing) Log = null;
     }
     #endregion
     #region Handel_Movement

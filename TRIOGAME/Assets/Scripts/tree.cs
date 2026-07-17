@@ -15,16 +15,6 @@ public class tree : MonoBehaviour
     }
     void Update()
     {
-        //RaycastHit[] Hits = Physics.SphereCastAll(treeStump.position, choopRange, new Vector3(0, -3, 0));
-
-        /*
-        Debug.DrawRay(transform.position, new Vector3(choopRange, 0, 0));
-        Debug.DrawRay(transform.position, new Vector3(-choopRange, 0, 0));
-        Debug.DrawRay(transform.position, new Vector3(0, 0, choopRange));
-        Debug.DrawRay(transform.position, new Vector3(0, 0, -choopRange));
-        */
-
-        // sending out 8 raycast and checking for nerby players
         for (int i = 0; i < RayAmounts; i++)
         {
             float angle = i * 45f * Mathf.Deg2Rad;

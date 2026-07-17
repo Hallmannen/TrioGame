@@ -28,14 +28,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2395207807670677705}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.75, y: 3.95, z: 2.41}
   m_LocalScale: {x: 1, y: 6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6719729127812246684}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5158684295060390283
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -127,6 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   choopRange: 2
+  RayAmounts: 8
   treeStump: {fileID: 6719729127812246684}
   treeStumpObj: {fileID: 3565487297636106673, guid: 010f66a5e60ba0b49abb734a981d12eb, type: 3}
   falingTreeObj: {fileID: 8393883981220151312, guid: 61f6c98376410be41b142a528f185d2f, type: 3}
