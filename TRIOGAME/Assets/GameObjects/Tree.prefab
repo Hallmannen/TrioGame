@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2395207807670677705}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.38268346, z: 0, w: 0.9238795}
   m_LocalPosition: {x: -1.75, y: 3.95, z: 2.41}
   m_LocalScale: {x: 1, y: 6, z: 1}
   m_ConstrainProportionsScale: 0
@@ -131,6 +131,7 @@ MonoBehaviour:
   treeStump: {fileID: 6719729127812246684}
   treeStumpObj: {fileID: 3565487297636106673, guid: 010f66a5e60ba0b49abb734a981d12eb, type: 3}
   falingTreeObj: {fileID: 8393883981220151312, guid: 61f6c98376410be41b142a528f185d2f, type: 3}
+  Renderer: {fileID: 5083754831083040549}
 --- !u!1 &7102571028082309848
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class tree : MonoBehaviour
+public class Tree : MonoBehaviour
 {
     public float choopRange = 1;
     public int RayAmounts = 8;
@@ -31,7 +31,6 @@ public class tree : MonoBehaviour
                 }
             }
         }
-
     }
     public void choopTree()
     {

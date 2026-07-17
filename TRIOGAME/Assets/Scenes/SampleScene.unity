@@ -430,8 +430,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 27.99, y: 1, z: 38.3}
-  m_Center: {x: 0, y: 5.1, z: 0}
+  m_Size: {x: 36.3, y: 1, z: 57.7}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &970401793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -444,16 +444,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83a6b5de21bc8284e92b9bbc43471a90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TreeSpawner
-  TreePrefab:
+  TreePrefabs:
   - {fileID: 2395207807670677705, guid: 165665b6333f718499b41c3d90a738de, type: 3}
   GrassPrefabs:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  StonePrefabs: []
+  - {fileID: 919132149155446097, guid: 5cc86df3870521348a85afd3386fd476, type: 3}
+  - {fileID: 919132149155446097, guid: 785a49edd42662c4abc078bf141c478c, type: 3}
+  - {fileID: 919132149155446097, guid: 54c57b6b6ec630549a3ca313ed99c1be, type: 3}
+  - {fileID: 919132149155446097, guid: a873a3cbaa7452b47a9d46cb5fe4a059, type: 3}
+  StonePrefabs:
+  - {fileID: 919132149155446097, guid: 870043abffbac0f429ac71b9c53fb972, type: 3}
+  - {fileID: 919132149155446097, guid: f3e676bdb2516594da8b01e3a25e4e95, type: 3}
   SpawnArea: {fileID: 970401792}
-  AmountOfTrees: 10
   Ground:
     serializedVersion: 2
     m_Bits: 64
@@ -466,7 +467,7 @@ Transform:
   m_GameObject: {fileID: 970401791}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 5.6, y: -0.8, z: -1.2}
+  m_LocalPosition: {x: 8.98, y: -0.8, z: -2.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
