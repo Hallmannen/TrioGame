@@ -9,6 +9,7 @@ public class FolowCamera : MonoBehaviour
     public Vector3 offset; // Offset from the player's position
     public float Transparecy = 0.3f;
     private Vector3 velocity = Vector3.zero;
+    public Vector3 Transparentrayoffset = new Vector3(0, 0, 0);
     public float smoothTime = 0.3f;
     private List<Renderer> transparentObjects = new List<Renderer>();
     void LateUpdate()
@@ -24,10 +25,11 @@ public class FolowCamera : MonoBehaviour
 
         transparentObjects.Clear();
 
-        Vector3 direction = player.position - (transform.position + transform.forward);
+        Vector3 direction = player.position - (transform.position + Transparentrayoffset);
+        float rayDistance = Vector3.Distance(player.position, transform.position + Transparentrayoffset);
 
-        RaycastHit[] hits = Physics.RaycastAll(transform.position, direction);
-        Debug.DrawRay(transform.position, direction, Color.red);
+        RaycastHit[] hits = Physics.RaycastAll(transform.position, direction, rayDistance);
+        //Debug.DrawRay(transform.position, direction, Color.red);
 
         foreach (RaycastHit hit in hits)
         {

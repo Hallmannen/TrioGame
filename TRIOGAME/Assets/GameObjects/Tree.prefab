@@ -69,7 +69,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a7782bca64c5fa449b4017dbbf6ef83a, type: 2}
+  - {fileID: 2100000, guid: adac14ac4542f244ea6d549f0624f609, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -131,7 +131,6 @@ MonoBehaviour:
   treeStump: {fileID: 6719729127812246684}
   treeStumpObj: {fileID: 3565487297636106673, guid: 010f66a5e60ba0b49abb734a981d12eb, type: 3}
   falingTreeObj: {fileID: 8393883981220151312, guid: 61f6c98376410be41b142a528f185d2f, type: 3}
-  Renderer: {fileID: 5083754831083040549}
 --- !u!1 &7102571028082309848
 GameObject:
   m_ObjectHideFlags: 0

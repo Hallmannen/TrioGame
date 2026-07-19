@@ -2,6 +2,7 @@
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 public class Player_Movement : MonoBehaviour
 {
     public float maxSpeed = 6f;
@@ -24,6 +25,10 @@ public class Player_Movement : MonoBehaviour
     private float logStuck_moveModifier;
     private bool CanGrabBool = false;
     public Vector3 rayOrigin;
+    void Start()
+    {
+        //Application.targetFrameRate = 60;
+    }
     void Update()
     {
         MoveHandeler(); // MovmentHandeler is in Region Handel_Movnent
@@ -33,18 +38,20 @@ public class Player_Movement : MonoBehaviour
     #region Handel_Grabing_stuff
     void PickupHandeler()
     {
-        DrawRayForPlayer();
-        if (Keyboard.current.eKey.wasPressedThisFrame)
+        if (Keyboard.current.eKey.wasPressedThisFrame) // this need to be in update so it can reliebly se when the player is pressing the e Button
         {
             Interact();
         }
-
+    }
+    void FixedUpdate()
+    {
+        DrawRayForPlayer();
     }
     void DrawRayForPlayer()
     {
         float angle = transform.eulerAngles.y * Mathf.Deg2Rad;
         Vector3 dir = new Vector3(Mathf.Sin(angle), 0f, Mathf.Cos(angle));
-        rayOrigin = transform.position + transform.up * -0.4f;
+        rayOrigin = transform.position + transform.up * 0.4f;
 
         if (Physics.Raycast(rayOrigin, dir, out hit, GrabRange)) // here i is where the ray is created
         {
@@ -85,10 +92,19 @@ public class Player_Movement : MonoBehaviour
     }
     void Interact()
     {
-        CanGrabBool = false;
-        isGrabbing = !isGrabbing;
-
-        if (!isGrabbing) Log = null;
+        if (!isGrabbing)
+        {
+            if (Log != null)
+            {
+                isGrabbing = true;
+                CanGrabBool = false;
+            }
+        }
+        else
+        {
+            isGrabbing = false;
+            Log = null;
+        }
     }
     #endregion
     #region Handel_Movement
