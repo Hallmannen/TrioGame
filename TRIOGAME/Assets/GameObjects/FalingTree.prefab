@@ -4819,7 +4819,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 78c3f4b58bb85b7489020a32c3e360cd, type: 2}
+  - {fileID: 2100000, guid: 396508d25835ca64bba4144bc6f5944c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9692,7 +9692,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 78c3f4b58bb85b7489020a32c3e360cd, type: 2}
+  - {fileID: 2100000, guid: 396508d25835ca64bba4144bc6f5944c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9761,6 +9761,7 @@ GameObject:
   - component: {fileID: -1486579963403110666}
   - component: {fileID: 5860422007158682446}
   - component: {fileID: 5822083678467613611}
+  - component: {fileID: 3237241581847447155}
   m_Layer: 3
   m_Name: FalingTree
   m_TagString: FalenTree
@@ -10025,6 +10026,24 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &3237241581847447155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8393883981220151312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc892676ac049b5469a88dcf1c83f3ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaterialScript
+  ArrayIdx: 1
+  MaterialArray:
+  - wood
+  - stone
+  - mud
+  Amount: 2
 --- !u!1 &8541093382002110784
 GameObject:
   m_ObjectHideFlags: 0
@@ -14844,7 +14863,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 78c3f4b58bb85b7489020a32c3e360cd, type: 2}
+  - {fileID: 2100000, guid: 396508d25835ca64bba4144bc6f5944c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

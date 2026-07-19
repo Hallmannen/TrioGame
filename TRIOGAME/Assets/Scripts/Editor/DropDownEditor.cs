@@ -11,8 +11,7 @@ public class DropDownEditor : Editor
         MaterialScript script = (MaterialScript)target;
 
         GUIContent arrayLabel = new GUIContent("Material typ");
-        script.ArrayIdx = EditorGUILayout.Popup(arrayLabel, script.ArrayIdx, script.MyArray);
-
+        script.ArrayIdx = EditorGUILayout.Popup(arrayLabel, script.ArrayIdx, script.MaterialArray);
 
     }
 }
