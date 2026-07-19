@@ -9857,7 +9857,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::logGrip
   Player: {fileID: 0}
   rigidbody: {fileID: -1486579963403110666}
-  PushForce: 1
+  PushForce: -1
 --- !u!54 &-1486579963403110666
 Rigidbody:
   m_ObjectHideFlags: 0

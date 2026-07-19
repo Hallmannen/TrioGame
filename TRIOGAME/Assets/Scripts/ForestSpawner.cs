@@ -6,6 +6,7 @@ public class TreeSpawner : MonoBehaviour
     public GameObject[] TreePrefabs;
     public GameObject[] GrassPrefabs;
     public GameObject[] StonePrefabs;
+    public GameObject[] BigStonePrefab;
     public BoxCollider SpawnArea;
     public LayerMask Ground;
     void Start()
@@ -13,6 +14,7 @@ public class TreeSpawner : MonoBehaviour
         SpawnAssets(TreePrefabs, 6f); // if you cal spawnAssets you can shose what to spawn and how farapoart the shuld be in a radius
         SpawnAssets(GrassPrefabs, 1f);
         SpawnAssets(StonePrefabs, 15f);
+        SpawnAssets(BigStonePrefab, 40f);
     }
     void SpawnAssets(GameObject[] preffab, float Radius)
     {

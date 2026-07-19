@@ -29,7 +29,7 @@ public class FolowCamera : MonoBehaviour
         float rayDistance = Vector3.Distance(player.position, transform.position + Transparentrayoffset);
 
         RaycastHit[] hits = Physics.RaycastAll(transform.position, direction, rayDistance);
-        //Debug.DrawRay(transform.position, direction, Color.red);
+        Debug.DrawRay(transform.position, direction, Color.red);
 
         foreach (RaycastHit hit in hits)
         {

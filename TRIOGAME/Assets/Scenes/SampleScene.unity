@@ -145,7 +145,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1783898}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 0fe7b816c4d5f1947a583a7c32313d33, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -225,8 +225,8 @@ Transform:
   m_GameObject: {fileID: 1783898}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.92387927, z: -0, w: 0.38268414}
-  m_LocalPosition: {x: 7.147645, y: 0, z: -0.36365938}
-  m_LocalScale: {x: 51.697002, y: 1.6861264, z: 36.8698}
+  m_LocalPosition: {x: 60.3, y: 0, z: -61.2}
+  m_LocalScale: {x: 275.3, y: 1.6861264, z: 197.9}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -278,16 +278,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da602a878a883b64c8e0a3f927e56b14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  maxSpeed: 10
+  maxSpeed: 7
   acceleration: 100
   deceleration: 60
   rotationSpeed: 10
-  Grabforce: 10
+  Grabforce: 69.9
   GrabRange: 1
-  GrabPositionOffset: {x: 0, y: -0.3, z: 1}
+  GrabPositionOffset: {x: 0, y: 1, z: 0.5}
   controller: {fileID: 886065411}
   Log: {fileID: 0}
   isGrabbing: 0
+  GrabSpeedMultiplyer: 0.9
   minLogStuckRange: 0
   maxLogStuckRange: 4
   rayOrigin: {x: 0, y: 0, z: 0}
@@ -410,8 +411,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 36.3, y: 1, z: 57.7}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 58.72683, y: 1, z: 264.4358}
+  m_Center: {x: 9.765963, y: 0, z: -1.5019147}
 --- !u!114 &970401793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -434,6 +435,8 @@ MonoBehaviour:
   StonePrefabs:
   - {fileID: 919132149155446097, guid: 870043abffbac0f429ac71b9c53fb972, type: 3}
   - {fileID: 919132149155446097, guid: f3e676bdb2516594da8b01e3a25e4e95, type: 3}
+  BigStonePrefab:
+  - {fileID: 919132149155446097, guid: 18725425300d2894388b8c99fc2e4658, type: 3}
   SpawnArea: {fileID: 970401792}
   Ground:
     serializedVersion: 2
@@ -447,7 +450,7 @@ Transform:
   m_GameObject: {fileID: 970401791}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 8.98, y: 1, z: -2.04}
+  m_LocalPosition: {x: 100, y: 1, z: -100}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -826,8 +829,8 @@ Transform:
   m_GameObject: {fileID: 1679978145}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.92387927, z: -0, w: 0.38268414}
-  m_LocalPosition: {x: -9.784928, y: 0, z: 16.077572}
-  m_LocalScale: {x: 51.4998, y: 1, z: 10.5013}
+  m_LocalPosition: {x: -15.7, y: 0, z: 14.6}
+  m_LocalScale: {x: 266, y: 1, z: 18.69}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1594936202}

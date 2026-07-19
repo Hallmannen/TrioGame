@@ -141,7 +141,7 @@ public class Player_Movement : MonoBehaviour
         //if the player is holding a log then it shuld look towards the log
         if (isGrabbing && Log != null)
         {
-            PlayerPosition *= GrabSpeedMultiplyer;
+
             Vector3 direction = worldGrabPoint - transform.position;
             direction.y = 0f; // Ignorera höjdskillnad
 
