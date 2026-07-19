@@ -19,12 +19,12 @@ public class FolowCamera : MonoBehaviour
         // set the alpha value of all the trees the rays from the camera to the player hit
         foreach (Renderer rend in transparentObjects)
         {
-            SetAlpha(rend, 1f);
+            if (rend != null) SetAlpha(rend, 1f);
         }
 
         transparentObjects.Clear();
 
-        Vector3 direction = player.position - transform.position;
+        Vector3 direction = player.position - (transform.position + transform.forward);
 
         RaycastHit[] hits = Physics.RaycastAll(transform.position, direction);
         Debug.DrawRay(transform.position, direction, Color.red);
