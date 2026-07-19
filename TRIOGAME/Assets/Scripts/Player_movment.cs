@@ -17,6 +17,7 @@ public class Player_Movement : MonoBehaviour
     private Vector3 PlayerPosition;
     public bool isGrabbing = false;
     private RaycastHit hit;
+    public float GrabSpeedMultiplyer = 0.9f;
     private Vector3 localGrabPoint;
     private Vector3 worldGrabPoint;
     public float minLogStuckRange = 1;
@@ -31,21 +32,20 @@ public class Player_Movement : MonoBehaviour
     }
     void Update()
     {
-        MoveHandeler(); // MovmentHandeler is in Region Handel_Movnent
         PickupHandeler(); // Pickuphandeler is in Handel_Grabing_stuff
-    }
-
-    #region Handel_Grabing_stuff
-    void PickupHandeler()
-    {
-        if (Keyboard.current.eKey.wasPressedThisFrame) // this need to be in update so it can reliebly se when the player is pressing the e Button
-        {
-            Interact();
-        }
     }
     void FixedUpdate()
     {
-        DrawRayForPlayer();
+        MoveHandeler(); // MovmentHandeler is in Region Handel_Movnent
+        DrawRayForPlayer(); // DrawRayForPlayer is in Region Handel_Grabing_Stuff
+    }
+    #region Handel_Grabing_stuff
+    void PickupHandeler()
+    {
+        if (Keyboard.current.eKey.wasPressedThisFrame || Gamepad.current.buttonWest.wasPressedThisFrame) // this need to be in update so it can reliebly se when the player is pressing the e Button
+        {
+            Interact();
+        }
     }
     void DrawRayForPlayer()
     {
@@ -141,6 +141,7 @@ public class Player_Movement : MonoBehaviour
         //if the player is holding a log then it shuld look towards the log
         if (isGrabbing && Log != null)
         {
+            PlayerPosition *= GrabSpeedMultiplyer;
             Vector3 direction = worldGrabPoint - transform.position;
             direction.y = 0f; // Ignorera höjdskillnad
 
@@ -156,7 +157,6 @@ public class Player_Movement : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(PlayerPosition);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
-
 
         controller.SimpleMove(PlayerPosition * logStuck_moveModifier);
     }
