@@ -250,7 +250,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 42be6d9b79f6fdc4aa10539a60278743, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.1
+      value: -1.19
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 42be6d9b79f6fdc4aa10539a60278743, type: 3}
       propertyPath: m_LocalPosition.z
@@ -467,7 +467,7 @@ Transform:
   m_GameObject: {fileID: 970401791}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 8.98, y: -0.8, z: -2.04}
+  m_LocalPosition: {x: 8.98, y: 1, z: -2.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -605,7 +605,7 @@ Transform:
   m_GameObject: {fileID: 1479509424}
   serializedVersion: 2
   m_LocalRotation: {x: 0.2588191, y: -0, z: -0, w: 0.9659258}
-  m_LocalPosition: {x: -0.8, y: 20.7, z: -30.5}
+  m_LocalPosition: {x: -0.00000004214682, y: 21.22305, z: -33.49999}
   m_LocalScale: {x: 1.5418, y: 1.6912, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -624,8 +624,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FolowCamera
   player: {fileID: 886065409}
-  offset: {x: -0.86, y: 19.3, z: -33.8}
-  smoothTime: 0.3
+  offset: {x: 0, y: 19.3, z: -33.5}
+  Transparecy: 0.2
+  smoothTime: 0.4
 --- !u!1 &1594936201
 GameObject:
   m_ObjectHideFlags: 0
@@ -844,7 +845,7 @@ Transform:
   m_GameObject: {fileID: 1679978145}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.92387927, z: -0, w: 0.38268414}
-  m_LocalPosition: {x: -9.784928, y: 0.096838415, z: 16.077572}
+  m_LocalPosition: {x: -9.784928, y: 0, z: 16.077572}
   m_LocalScale: {x: 51.4998, y: 1, z: 10.5013}
   m_ConstrainProportionsScale: 0
   m_Children:

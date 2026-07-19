@@ -10,9 +10,9 @@ public class TreeSpawner : MonoBehaviour
     public LayerMask Ground;
     void Start()
     {
-        SpawnAssets(TreePrefabs, 5f); // if you cal spawnAssets you can shose what to spawn and how farapoart the shuld be
+        SpawnAssets(TreePrefabs, 6f); // if you cal spawnAssets you can shose what to spawn and how farapoart the shuld be in a radius
         SpawnAssets(GrassPrefabs, 1f);
-        SpawnAssets(StonePrefabs, 10f);
+        SpawnAssets(StonePrefabs, 15f);
     }
     void SpawnAssets(GameObject[] preffab, float Radius)
     {
