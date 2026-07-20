@@ -1,26 +1,23 @@
 using UnityEngine;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
-
 public class FolowCamera : MonoBehaviour
 {
     public Transform player; // The camera will follow this transform (usually the player)
     public Vector3 offset; // Offset from the player's position
-    public float Transparecy = 0.3f;
+    public float transparency = 0.3f;
     private Vector3 velocity = Vector3.zero;
     public Vector3 Transparentrayoffset = new Vector3(0, 0, 0);
     public float smoothTime = 0.3f;
-    private List<Renderer> transparentObjects = new List<Renderer>();
+    private List<MeshRenderer> transparentObjects = new List<MeshRenderer>();
     void LateUpdate()
     {
         Vector3 targetPosition = player.position + offset;
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
 
         // set the alpha value of all the trees the rays from the camera to the player hit
-        foreach (Renderer rend in transparentObjects)
+        foreach (MeshRenderer rend in transparentObjects)
         {
-            if (rend != null) SetAlpha(rend, 1f);
+            if (rend != null) SetAlpha(rend, false);
         }
 
         transparentObjects.Clear();
@@ -29,26 +26,33 @@ public class FolowCamera : MonoBehaviour
         float rayDistance = Vector3.Distance(player.position, transform.position + Transparentrayoffset);
 
         RaycastHit[] hits = Physics.RaycastAll(transform.position, direction, rayDistance);
-        Debug.DrawRay(transform.position, direction, Color.red);
+        //Debug.DrawRay(transform.position, direction, Color.red);
 
         foreach (RaycastHit hit in hits)
         {
             if (hit.collider.transform != player)
             {
-                Renderer rend = hit.collider.GetComponent<Renderer>();
+                MeshRenderer rend = hit.collider.GetComponent<MeshRenderer>();
 
                 if (rend != null)
                 {
-                    SetAlpha(rend, Transparecy);
+                    SetAlpha(rend, true);
                     transparentObjects.Add(rend);
                 }
             }
         }
     }
-    void SetAlpha(Renderer rend, float alpha)
+    void SetAlpha(MeshRenderer rend, bool isTransparent)
     {
-        Color color = rend.material.color;
-        color.a = alpha;
-        rend.material.color = color;
+        if (isTransparent)
+        {
+            rend.material.SetOverrideTag("RenderType", "Transparent");
+            rend.material.SetFloat("_Surface", transparency);
+        }
+        else
+        {
+            rend.material.SetOverrideTag("RenderType", "Opaque");
+            rend.material.SetFloat("_Surface", 0);
+        }
     }
 }
