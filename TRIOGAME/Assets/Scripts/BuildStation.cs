@@ -34,7 +34,7 @@ public class BuildStation : MonoBehaviour
                 for (int x = 0; x < currentMaterials.Length; x++)
                 {
                     int matNumber = MScript.ArrayIdx;
-                    if (matNumber == x) currentMaterials[x] += MScript.Amount;
+                    if (matNumber == x) currentMaterials[x-1] += MScript.Amount;
                 }
 
                 buildManager.allAvailibleMaterial.RemoveAt(i);

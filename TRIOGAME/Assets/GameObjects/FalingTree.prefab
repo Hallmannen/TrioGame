@@ -10038,7 +10038,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc892676ac049b5469a88dcf1c83f3ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MaterialScript
-  ArrayIdx: 0
+  ArrayIdx: 1
   MaterialArray:
   - wood
   - stone
