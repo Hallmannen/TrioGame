@@ -14,8 +14,7 @@ public class FolowCamera : MonoBehaviour
     private List<Renderer> transparentObjects = new List<Renderer>();
     void LateUpdate()
     {
-        Vector3 targetPosition = player.position + offset;
-        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
+        
 
         // set the alpha value of all the trees the rays from the camera to the player hit
         foreach (Renderer rend in transparentObjects)

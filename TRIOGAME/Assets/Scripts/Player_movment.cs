@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 public class Player_Movement : MonoBehaviour
 {
+    public bool PlayingWithControler = false;
+    [Space]
     public float maxSpeed = 6f;
     public float acceleration = 15f;
     public float deceleration = 20f;
@@ -42,10 +44,11 @@ public class Player_Movement : MonoBehaviour
     #region Handel_Grabing_stuff
     void PickupHandeler()
     {
-        if (Keyboard.current.eKey.wasPressedThisFrame || Gamepad.current.buttonWest.wasPressedThisFrame) // this need to be in update so it can reliebly se when the player is pressing the e Button
-        {
-            Interact();
-        }
+        if (Keyboard.current.eKey.wasPressedThisFrame && !PlayingWithControler) Interact(); // this need to be in update so it can reliebly se when the player is pressing the e Button
+
+        if (Gamepad.current != null && PlayingWithControler && Gamepad.current.buttonWest.wasPressedThisFrame) Interact();
+
+
     }
     void DrawRayForPlayer()
     {
@@ -113,7 +116,7 @@ public class Player_Movement : MonoBehaviour
         Vector2 input = Vector2.zero;
 
         // Keyboard input
-        if (Keyboard.current != null)
+        if (Keyboard.current != null && PlayingWithControler == false)
         {
             if (Keyboard.current.wKey.isPressed) input.y += 1;
             if (Keyboard.current.sKey.isPressed) input.y -= 1;
@@ -122,7 +125,7 @@ public class Player_Movement : MonoBehaviour
         }
 
         // Controler input
-        if (Gamepad.current != null)
+        if (Gamepad.current != null && PlayingWithControler)
         {
             input += Gamepad.current.leftStick.ReadValue();
         }
