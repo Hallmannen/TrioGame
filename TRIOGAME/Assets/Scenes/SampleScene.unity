@@ -278,6 +278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da602a878a883b64c8e0a3f927e56b14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  PlayingWithControler: 0
   maxSpeed: 7
   acceleration: 100
   deceleration: 60
@@ -515,6 +516,7 @@ GameObject:
   - component: {fileID: 1479509426}
   - component: {fileID: 1479509425}
   - component: {fileID: 1479509429}
+  - component: {fileID: 1479509430}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -657,6 +659,25 @@ MonoBehaviour:
   Transparecy: 0.2
   Transparentrayoffset: {x: 0, y: -2.5, z: 0}
   smoothTime: 0.4
+--- !u!114 &1479509430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1479509424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6971bd09b867a9945b4a02c3936d79b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NewMultiTargetCamera
+  Targets:
+  - {fileID: 886065409}
+  offset: {x: 0, y: 19.3, z: -33.5}
+  minZoom: 0
+  maxZoom: 0
+  zoomLimiter: 50
+  camSmothnes: 0.5
 --- !u!1 &1594936201
 GameObject:
   m_ObjectHideFlags: 0

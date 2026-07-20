@@ -1,25 +1,19 @@
 using UnityEngine;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 
 public class FolowCamera : MonoBehaviour
 {
     public Transform player; // The camera will follow this transform (usually the player)
-    public Vector3 offset; // Offset from the player's position
-    public float Transparecy = 0.3f;
-    private Vector3 velocity = Vector3.zero;
+    public float Transparecy = 0.5f;
     public Vector3 Transparentrayoffset = new Vector3(0, 0, 0);
     public float smoothTime = 0.3f;
     private List<Renderer> transparentObjects = new List<Renderer>();
     void LateUpdate()
     {
-        
-
         // set the alpha value of all the trees the rays from the camera to the player hit
         foreach (Renderer rend in transparentObjects)
         {
-            if (rend != null) SetAlpha(rend, 1f);
+            if (rend != null) SetAlpha(rend.material, false);
         }
 
         transparentObjects.Clear();
@@ -38,16 +32,41 @@ public class FolowCamera : MonoBehaviour
 
                 if (rend != null)
                 {
-                    SetAlpha(rend, Transparecy);
+                    SetAlpha(rend.material, true);
                     transparentObjects.Add(rend);
                 }
             }
         }
     }
-    void SetAlpha(Renderer rend, float alpha)
+    void SetAlpha(Material rendmat, bool isTransparant)
     {
-        Color color = rend.material.color;
-        color.a = alpha;
-        rend.material.color = color;
+        if (isTransparant)
+        {
+            rendmat.SetFloat("_Surface", 1);
+            rendmat.SetOverrideTag("RenderType", "Transparent");
+            rendmat.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+            rendmat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+            rendmat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+            rendmat.SetInt("_ZWrite", 0);
+            rendmat.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
+
+            Color color = rendmat.color;
+            color.a = Transparecy;
+            rendmat.color = color;
+        }
+        else
+        {
+            rendmat.SetFloat("_Surface", 0);
+            rendmat.SetOverrideTag("RenderType", "Opaque");
+            rendmat.DisableKeyword("_SURFACE_TYPE_TRANSPARENT");
+            rendmat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+            rendmat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
+            rendmat.SetInt("_ZWrite", 1);
+            rendmat.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Geometry;
+
+            Color color = rendmat.color;
+            color.a = 1f;
+            rendmat.color = color;
+        }
     }
 }
