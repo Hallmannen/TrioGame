@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BuildStation : MonoBehaviour
@@ -29,7 +30,6 @@ public class BuildStation : MonoBehaviour
 
         for (int i = 0; i < L; i++)
         {
-            
             Transform MatTrans = buildManager.allAvailibleMaterial[i]; //<-- needed and availible material transforms
             float dis = Vector3.Distance(MatTrans.position, transform.position);
             if (dis <= MaterialDistans)
@@ -44,7 +44,7 @@ public class BuildStation : MonoBehaviour
                 buildManager.allAvailibleMaterial.RemoveAt(i);
                 Destroy(MScript.gameObject);
                 Build();
-                
+
             }
         }
     }
@@ -69,11 +69,11 @@ public class BuildStation : MonoBehaviour
                 MaterialCheck++;
             }
         }
-        if(MaterialCheck == currentMaterials.Length)
+        if (MaterialCheck == currentMaterials.Length)
         {
 
-            
-            if(currentBuildObj != null) Destroy(currentBuildObj);
+
+            if (currentBuildObj != null) Destroy(currentBuildObj);
             currentBuildObj = Instantiate(allBuildingStages[buildProgres].BuildingObj, transform.position, Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y, this.transform.rotation.z));
 
             for (int i = 0; i < currentMaterials.Length; i++)
@@ -86,7 +86,7 @@ public class BuildStation : MonoBehaviour
             {
                 GameObject newPartical = Instantiate(CompletPartical, transform.position, Quaternion.identity);
                 Destroy(newPartical, 6);
-                Destroy(this.GetComponentInChildren<Transform>().gameObject);
+                Destroy(transform.GetChild(0).gameObject);
                 buildingComplet = true;
                 buildManager.checkAllBuildingStatus();
                 this.enabled = false;

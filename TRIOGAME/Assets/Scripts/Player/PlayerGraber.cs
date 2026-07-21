@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+
 public class PlayerGraber : MonoBehaviour
 {
     public float Grabforce = 20f;
@@ -62,6 +63,10 @@ public class PlayerGraber : MonoBehaviour
             Debug.DrawLine(rayOrigin, worldGrabPoint, Color.red); // added a debug så we can se where the player has grabd the tree
 
             Log.GetComponent<logGrip>().OnPlayerHoldingTree(Grabforce, targetPosition, worldGrabPoint); // here i say where the log huld go
+        }
+        else if (Log == null && isGrabbing)
+        {
+            isGrabbing = false;
         }
     }
     void CalculateLogStuckMoveModifier()
