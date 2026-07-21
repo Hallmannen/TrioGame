@@ -45,7 +45,6 @@ public class Tree : MonoBehaviour
         {
             TreeHp -= Time.deltaTime * 100f;
         }
-
     }
     void SpawnTreeparts()
     {

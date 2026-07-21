@@ -3,10 +3,9 @@ using System.Collections.Generic;
 
 public class FolowCamera : MonoBehaviour
 {
-    public Transform player; // The camera will follow this transform (usually the player)
+    public Transform[] players;
     public float Transparecy = 0.5f;
-    public Vector3 Transparentrayoffset = new Vector3(0, 0, 0);
-    public float smoothTime = 0.3f;
+    public float TransparentrayYoffset = 2f;
     private List<Renderer> transparentObjects = new List<Renderer>();
     void LateUpdate()
     {
@@ -18,55 +17,60 @@ public class FolowCamera : MonoBehaviour
 
         transparentObjects.Clear();
 
-        Vector3 direction = player.position - (transform.position + Transparentrayoffset);
-        float rayDistance = Vector3.Distance(player.position, transform.position + Transparentrayoffset);
-
-        RaycastHit[] hits = Physics.RaycastAll(transform.position, direction, rayDistance);
-        Debug.DrawRay(transform.position, direction, Color.red);
-
-        foreach (RaycastHit hit in hits)
+        foreach (Transform ThisPlayer in players)
         {
-            if (hit.collider.transform != player)
-            {
-                Renderer rend = hit.collider.GetComponent<Renderer>();
+            Vector3 rayOrigin = transform.position;
+            Vector3 direction = (ThisPlayer.position + new Vector3(0, TransparentrayYoffset, 0) - rayOrigin).normalized;
+            float rayDistance = Vector3.Distance(ThisPlayer.position, rayOrigin);
 
-                if (rend != null)
+            RaycastHit[] hits = Physics.RaycastAll(rayOrigin, direction, rayDistance);
+
+            Debug.DrawRay(rayOrigin, direction * rayDistance, Color.red);
+
+            foreach (RaycastHit hit in hits)
+            {
+                if (hit.collider.transform != ThisPlayer)
                 {
-                    SetAlpha(rend.material, true);
-                    transparentObjects.Add(rend);
+                    Renderer rend = hit.collider.GetComponent<Renderer>();
+
+                    if (rend != null)
+                    {
+                        SetAlpha(rend.material, true);
+                        transparentObjects.Add(rend);
+                    }
                 }
             }
         }
-    }
-    void SetAlpha(Material rendmat, bool isTransparant)
-    {
-        if (isTransparant)
+        void SetAlpha(Material rendmat, bool isTransparant)
         {
-            rendmat.SetFloat("_Surface", 1);
-            rendmat.SetOverrideTag("RenderType", "Transparent");
-            rendmat.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
-            rendmat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-            rendmat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-            rendmat.SetInt("_ZWrite", 0);
-            rendmat.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
+            if (isTransparant)
+            {
+                rendmat.SetFloat("_Surface", 1);
+                rendmat.SetOverrideTag("RenderType", "Transparent");
+                rendmat.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+                rendmat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+                rendmat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+                rendmat.SetInt("_ZWrite", 0);
+                rendmat.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
 
-            Color color = rendmat.color;
-            color.a = Transparecy;
-            rendmat.color = color;
-        }
-        else
-        {
-            rendmat.SetFloat("_Surface", 0);
-            rendmat.SetOverrideTag("RenderType", "Opaque");
-            rendmat.DisableKeyword("_SURFACE_TYPE_TRANSPARENT");
-            rendmat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
-            rendmat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
-            rendmat.SetInt("_ZWrite", 1);
-            rendmat.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Geometry;
+                Color color = rendmat.color;
+                color.a = Transparecy;
+                rendmat.color = color;
+            }
+            else
+            {
+                rendmat.SetFloat("_Surface", 0);
+                rendmat.SetOverrideTag("RenderType", "Opaque");
+                rendmat.DisableKeyword("_SURFACE_TYPE_TRANSPARENT");
+                rendmat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+                rendmat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
+                rendmat.SetInt("_ZWrite", 1);
+                rendmat.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Geometry;
 
-            Color color = rendmat.color;
-            color.a = 1f;
-            rendmat.color = color;
+                Color color = rendmat.color;
+                color.a = 1f;
+                rendmat.color = color;
+            }
         }
     }
 }
