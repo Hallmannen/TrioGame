@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb20d4af2bdcc34e9c81e44bca53fb6, type: 3}
-  m_Name: TestBuild_3
+  m_Name: TestBuild_4
   m_EditorClassIdentifier: Assembly-CSharp::Building
-  BuildingObj: {fileID: 7914542098740883643, guid: 09dd2110571ca0c4ba75d94c969beea0, type: 3}
+  BuildingObj: {fileID: 4225814617159143377, guid: 46868ca4bd637c848ab9d4b734c84083, type: 3}
   Priority: 0
-  woodCost: 2
+  woodCost: 4
   stoneCost: 0
   mudCost: 0

@@ -8,10 +8,14 @@ public class BuildStation : MonoBehaviour
     public float MaterialDistans = 3;
 
     private int buildProgres = 0;
-    private GameObject currentBuildObj;
+    public GameObject currentBuildObj;
     [Space]
     public int[] currentMaterials = new int[] { 0, 0, 0 };
     public int[] neededMaterials = new int[] { 0, 0, 0 };
+    [Space]
+    public GameObject CompletPartical;
+    [Space]
+    public bool buildingComplet = false;
     private void Awake()
     {
         //buildProgres++;
@@ -68,16 +72,29 @@ public class BuildStation : MonoBehaviour
         if(MaterialCheck == currentMaterials.Length)
         {
 
-            if (buildProgres + 1 > allBuildingStages.Length) return;
+            
             if(currentBuildObj != null) Destroy(currentBuildObj);
-            currentBuildObj = Instantiate(allBuildingStages[buildProgres].BuildingObj);
+            currentBuildObj = Instantiate(allBuildingStages[buildProgres].BuildingObj, transform.position, Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y, this.transform.rotation.z));
+
             for (int i = 0; i < currentMaterials.Length; i++)
             {
                 currentMaterials[i] = 0; // all materials set to 0
             }
 
             buildProgres++;
-            calculateBuildingCost();
+            if (buildProgres == allBuildingStages.Length)
+            {
+                GameObject newPartical = Instantiate(CompletPartical, transform.position, Quaternion.identity);
+                Destroy(newPartical, 6);
+                Destroy(this.GetComponentInChildren<Transform>().gameObject);
+                buildingComplet = true;
+                buildManager.checkAllBuildingStatus();
+                this.enabled = false;
+            }
+            else
+            {
+                calculateBuildingCost();
+            }
         }
 
     }
