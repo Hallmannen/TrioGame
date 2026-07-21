@@ -7,18 +7,18 @@ public class treeFallDMG : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.collider.CompareTag("Ground") && this.enabled)
+        if (collision.collider.CompareTag("Ground") && enabled)
         {
             ContactPoint contact = collision.contacts[0];
             Vector3 point = contact.point;
             GameObject newPartical = Instantiate(groundPartical, point, Quaternion.identity);
             Destroy(newPartical, 6);
-            this.enabled = false;
+            enabled = false;
         }
-        if (collision.collider.CompareTag("Tree") && this.enabled)
+        if (collision.collider.CompareTag("Tree") && enabled)
         {
-            Tree T = collision.collider.GetComponent<Tree>();
-            T.TreeHp = 0; T.choopTree();
+            Tree tree = collision.collider.GetComponent<Tree>();
+            //tree.TreeHp = 0; tree.choopTree();
             ContactPoint contact = collision.contacts[0];
             Vector3 point = contact.point;
             GameObject newPartical = Instantiate(treeHitPartical, point, Quaternion.identity);

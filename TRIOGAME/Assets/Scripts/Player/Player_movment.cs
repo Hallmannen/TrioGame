@@ -48,7 +48,7 @@ public class Player_Movement : MonoBehaviour
         PlayerPosition = Vector3.MoveTowards(PlayerPosition, targetVelocity, rate * Time.deltaTime);
 
         //if the player is holding a log then it shuld look towards the log
-        if (playerGraber.isGrabbing && playerGraber.Log != null)
+        if (playerGraber.isGrabbing && playerGraber.Interactebole != null)
         {
             Vector3 direction = playerGraber.worldGrabPoint - transform.position;
             direction.y = 0f; // Ignorera höjdskillnad

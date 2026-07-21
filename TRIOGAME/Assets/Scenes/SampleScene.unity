@@ -544,7 +544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da602a878a883b64c8e0a3f927e56b14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  PlayingWithControler: 0
+  PlayingWithControler: 1
   maxSpeed: 7
   acceleration: 100
   deceleration: 60
@@ -672,14 +672,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 737a7ebc568bdcb4aac20403f2b64c77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerGraber
-  Grabforce: 20
-  GrabRange: 1
+  Grabforce: 30
+  GrabRange: 1.5
+  SphercastRadius: 0.5
   GrabPositionOffset: {x: 1, y: 1, z: 0}
-  Log: {fileID: 0}
+  Interactebole: {fileID: 0}
   isGrabbing: 0
   worldGrabPoint: {x: 0, y: 0, z: 0}
   minLogStuckRange: 1
-  maxLogStuckRange: 5
+  maxLogStuckRange: 2
   logStuck_moveModifier: 1
   rayOrigin: {x: 0, y: 0, z: 0}
   player_Movement: {fileID: 886065410}

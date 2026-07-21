@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,7 +8,7 @@ public class PlayerGraber : MonoBehaviour
     public float GrabRange = 1f;
     public float SphercastRadius = 1;
     public Vector3 GrabPositionOffset = new Vector3(1, 1, 0);
-    public GameObject Log;
+    public GameObject Interactebole;
     public bool isGrabbing = false;
     private RaycastHit hit;
     private Vector3 localGrabPoint;
@@ -30,51 +31,66 @@ public class PlayerGraber : MonoBehaviour
     }
     void PickupHandeler()
     {
-        if (Keyboard.current != null && !player_Movement.PlayingWithControler && Keyboard.current.eKey.wasPressedThisFrame) Interact(); // this need to be in update so it can reliebly se when the player is pressing the e Button
+        if (Keyboard.current != null && !player_Movement.PlayingWithControler && Keyboard.current.eKey.wasPressedThisFrame) // this need to be in update so it can reliebly se when the player is pressing the e Button
+        {
+            Interact();
+        }
 
-        if (Gamepad.current != null && player_Movement.PlayingWithControler && Gamepad.current.buttonWest.wasPressedThisFrame) Interact();
+        if (Gamepad.current != null && player_Movement.PlayingWithControler && Gamepad.current.buttonWest.wasPressedThisFrame)
+        {
+            Interact();
+        }
     }
     void OnDrawGizmos()
     {
-        if (hit.point == Vector3.zero) return;
-        Gizmos.DrawWireSphere(hit.point, SphercastRadius);
+        if (worldGrabPoint == Vector3.zero) return;
+        Gizmos.DrawWireSphere(worldGrabPoint, SphercastRadius);
+    }
+    void Castray()
+    {
+        float angle = transform.eulerAngles.y * Mathf.Deg2Rad;
+        Vector3 dir = new Vector3(Mathf.Sin(angle), 0f, Mathf.Cos(angle));
+
+        if (Physics.SphereCast(rayOrigin, SphercastRadius, dir, out hit, GrabRange)) // here i is where the ray is created
+        {
+            if (!isGrabbing && hit.collider.CompareTag("FalenTree"))
+            {
+                Interactebole = hit.collider.gameObject;
+                if (Interactebole != null)
+                {
+                    localGrabPoint = Interactebole.transform.InverseTransformPoint(hit.point);
+                }
+            }
+            if (!isGrabbing && hit.collider.CompareTag("Tree"))
+            {
+                Interactebole = hit.collider.gameObject;
+                if (Interactebole != null)
+                {
+                    Interactebole.GetComponent<Tree>().choopTree();
+                }
+            }
+        }
     }
 
     void DrawRayForPlayer()
     {
-        float angle = transform.eulerAngles.y * Mathf.Deg2Rad;
-        Vector3 dir = new Vector3(Mathf.Sin(angle), 0f, Mathf.Cos(angle));
         rayOrigin = transform.position + transform.up * 0.4f;
-
-        //if (Physics.Raycast(rayOrigin, dir, out hit, GrabRange)) // here i is where the ray is created
-        if(Physics.SphereCast(rayOrigin, SphercastRadius, dir, out hit, GrabRange))
-        {
-            //OnDrawGizmos();
-
-            if (!isGrabbing && hit.collider.CompareTag("FalenTree"))
-            {
-                Log = hit.collider.gameObject;
-                if (Log != null) // checs so i aculy have a log to do transform on
-                {
-                    localGrabPoint = Log.transform.InverseTransformPoint(hit.point);
-                }
-            }
-        }
 
         logStuck_moveModifier = 1;
 
-        if (Log != null && isGrabbing)
+        if (Interactebole != null && Interactebole.TryGetComponent(out logGrip _) && isGrabbing)
         {
-            CalculateLogStuckMoveModifier();
-
             Vector3 targetPosition = transform.position + transform.TransformDirection(GrabPositionOffset); // this and the row below updated the postition so it moves with the player
-            worldGrabPoint = Log.transform.TransformPoint(localGrabPoint);
+
+            worldGrabPoint = Interactebole.transform.TransformPoint(localGrabPoint);
+
+            CalculateLogStuckMoveModifier();
 
             Debug.DrawLine(rayOrigin, worldGrabPoint, Color.red); // added a debug så we can se where the player has grabd the tree
 
-            Log.GetComponent<logGrip>().OnPlayerHoldingTree(Grabforce, targetPosition, worldGrabPoint); // here i say where the log huld go
+            Interactebole.GetComponent<logGrip>().OnPlayerHoldingTree(Grabforce, targetPosition, worldGrabPoint); // here i say where the log huld go
         }
-        else if (Log == null && isGrabbing)
+        else if (Interactebole == null && isGrabbing)
         {
             isGrabbing = false;
         }
@@ -90,11 +106,11 @@ public class PlayerGraber : MonoBehaviour
         }
         CanGrabBool = true;
     }
-    void Interact()
+    void ChangeIsGrabbig()
     {
         if (!isGrabbing)
         {
-            if (Log != null)
+            if (Interactebole != null)
             {
                 isGrabbing = true;
                 CanGrabBool = false;
@@ -103,7 +119,12 @@ public class PlayerGraber : MonoBehaviour
         else
         {
             isGrabbing = false;
-            Log = null;
+            Interactebole = null;
         }
+    }
+    void Interact()
+    {
+        Castray();
+        ChangeIsGrabbig();
     }
 }
