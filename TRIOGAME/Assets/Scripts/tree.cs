@@ -14,30 +14,11 @@ public class Tree : MonoBehaviour
     {
         transform.position += Vector3.up * TreeSpawnYoffset;
     }
-    void Update()
-    {
-        for (int i = 0; i < RayAmounts; i++)
-        {
-            float angle = i * 45f * Mathf.Deg2Rad;
-            Vector3 dir = new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
-
-            Debug.DrawRay(treeStump.position, dir * choopRange, Color.red);
-
-            if (Physics.Raycast(treeStump.position, dir, out RaycastHit hit, choopRange))
-            {
-                //Debug.Log(hit.collider.name + " Is chooping down a tree!!");
-                if (hit.collider.CompareTag("Player"))
-                {
-                    choopTree();
-                }
-            }
-        }
-    }
     public void choopTree()
     {
         if (TreeHp <= 0)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
             SpawnTreeparts();
             Debug.Log("Chooping down tree! ");
         }

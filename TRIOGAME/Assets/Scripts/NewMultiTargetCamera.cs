@@ -51,6 +51,7 @@ public class NewMultiTargetCamera : MonoBehaviour
         }
 
         var bounds = new Bounds(Targets[0].position, Vector3.zero);
+
         for (int i = 0; i < Targets.Count; i++)
         {
             bounds.Encapsulate(Targets[i].position);

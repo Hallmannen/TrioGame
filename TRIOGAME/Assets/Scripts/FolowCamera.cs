@@ -25,7 +25,7 @@ public class FolowCamera : MonoBehaviour
 
             RaycastHit[] hits = Physics.RaycastAll(rayOrigin, direction, rayDistance);
 
-            Debug.DrawRay(rayOrigin, direction * rayDistance, Color.red);
+            Debug.DrawRay(rayOrigin, direction * rayDistance, Color.black);
 
             foreach (RaycastHit hit in hits)
             {

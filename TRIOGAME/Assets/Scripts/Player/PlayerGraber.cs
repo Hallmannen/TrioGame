@@ -30,7 +30,7 @@ public class PlayerGraber : MonoBehaviour
     }
     void PickupHandeler()
     {
-        if (Keyboard.current.eKey.wasPressedThisFrame && !player_Movement.PlayingWithControler) Interact(); // this need to be in update so it can reliebly se when the player is pressing the e Button
+        if (Keyboard.current != null && !player_Movement.PlayingWithControler && Keyboard.current.eKey.wasPressedThisFrame) Interact(); // this need to be in update so it can reliebly se when the player is pressing the e Button
 
         if (Gamepad.current != null && player_Movement.PlayingWithControler && Gamepad.current.buttonWest.wasPressedThisFrame) Interact();
     }
