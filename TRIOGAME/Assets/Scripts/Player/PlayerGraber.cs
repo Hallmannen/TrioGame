@@ -5,6 +5,7 @@ public class PlayerGraber : MonoBehaviour
 {
     public float Grabforce = 20f;
     public float GrabRange = 1f;
+    public float SphercastRadius = 1;
     public Vector3 GrabPositionOffset = new Vector3(1, 1, 0);
     public GameObject Log;
     public bool isGrabbing = false;
@@ -39,7 +40,8 @@ public class PlayerGraber : MonoBehaviour
         Vector3 dir = new Vector3(Mathf.Sin(angle), 0f, Mathf.Cos(angle));
         rayOrigin = transform.position + transform.up * 0.4f;
 
-        if (Physics.Raycast(rayOrigin, dir, out hit, GrabRange)) // here i is where the ray is created
+        //if (Physics.Raycast(rayOrigin, dir, out hit, GrabRange)) // here i is where the ray is created
+        if(Physics.SphereCast(rayOrigin, SphercastRadius, dir, out hit, GrabRange - SphercastRadius))
         {
             if (!isGrabbing && hit.collider.CompareTag("FalenTree"))
             {
