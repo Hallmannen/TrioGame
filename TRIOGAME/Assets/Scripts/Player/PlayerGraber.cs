@@ -34,6 +34,12 @@ public class PlayerGraber : MonoBehaviour
 
         if (Gamepad.current != null && player_Movement.PlayingWithControler && Gamepad.current.buttonWest.wasPressedThisFrame) Interact();
     }
+    void OnDrawGizmos()
+    {
+        if (hit.point == Vector3.zero) return;
+        Gizmos.DrawWireSphere(hit.point, SphercastRadius);
+    }
+
     void DrawRayForPlayer()
     {
         float angle = transform.eulerAngles.y * Mathf.Deg2Rad;
@@ -41,8 +47,10 @@ public class PlayerGraber : MonoBehaviour
         rayOrigin = transform.position + transform.up * 0.4f;
 
         //if (Physics.Raycast(rayOrigin, dir, out hit, GrabRange)) // here i is where the ray is created
-        if(Physics.SphereCast(rayOrigin, SphercastRadius, dir, out hit, GrabRange - SphercastRadius))
+        if(Physics.SphereCast(rayOrigin, SphercastRadius, dir, out hit, GrabRange))
         {
+            //OnDrawGizmos();
+
             if (!isGrabbing && hit.collider.CompareTag("FalenTree"))
             {
                 Log = hit.collider.gameObject;
