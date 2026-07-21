@@ -8,7 +8,8 @@ public class Tree : MonoBehaviour
     public GameObject treeStumpObj;
     public GameObject falingTreeObj;
     private readonly float TreeSpawnYoffset = 2.9669368f; // this offset is so the tree is not in the ground when i spawnds a new tree
-    private float TreeHp = 100;
+    public float TreeHp = 100;
+    [HideInInspector]
     void Start()
     {
         transform.position += Vector3.up * TreeSpawnYoffset;

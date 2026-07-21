@@ -9762,6 +9762,7 @@ GameObject:
   - component: {fileID: 5860422007158682446}
   - component: {fileID: 5822083678467613611}
   - component: {fileID: 3237241581847447155}
+  - component: {fileID: 2062198550293854188}
   m_Layer: 3
   m_Name: FalingTree
   m_TagString: FalenTree
@@ -10044,6 +10045,20 @@ MonoBehaviour:
   - stone
   - mud
   Amount: 2
+--- !u!114 &2062198550293854188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8393883981220151312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ae1c79b18e677b49b5e29b4439d5e49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  groundPartical: {fileID: 1881710842392876689, guid: 0f0a5a0e1a89fc74295deff01c980449, type: 3}
+  treeHitPartical: {fileID: 3220889663190099683, guid: ca0a797eafa3e144b9fa45c2395431b5, type: 3}
 --- !u!1 &8541093382002110784
 GameObject:
   m_ObjectHideFlags: 0
