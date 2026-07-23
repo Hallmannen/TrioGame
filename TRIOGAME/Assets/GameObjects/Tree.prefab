@@ -126,8 +126,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0f79391b0b3ed6479c155296a300ab0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  choopRange: 2
-  RayAmounts: 8
+  treeHP: 4
+  maxTreeHP: 0
+  ChoppBarValue: 0
   treeStump: {fileID: 6719729127812246684}
   treeStumpObj: {fileID: 3565487297636106673, guid: 010f66a5e60ba0b49abb734a981d12eb, type: 3}
   falingTreeObj: {fileID: 8393883981220151312, guid: 61f6c98376410be41b142a528f185d2f, type: 3}

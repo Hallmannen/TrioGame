@@ -1,6 +1,4 @@
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
 public class Player_Movement : MonoBehaviour
 {
@@ -48,7 +46,7 @@ public class Player_Movement : MonoBehaviour
         PlayerPosition = Vector3.MoveTowards(PlayerPosition, targetVelocity, rate * Time.deltaTime);
 
         //if the player is holding a log then it shuld look towards the log
-        if (playerGraber.isGrabbing && playerGraber.Interactebole != null)
+        if (playerGraber.isGrabbing && playerGraber.Interactebole != null && playerGraber.worldGrabPoint != Vector3.zero)
         {
             Vector3 direction = playerGraber.worldGrabPoint - transform.position;
             direction.y = 0f; // Ignorera höjdskillnad

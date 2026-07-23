@@ -1,9 +1,11 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerGraber : MonoBehaviour
 {
+    public Image TreeChoppBar;
     public float Grabforce = 20f;
     public float GrabRange = 1f;
     public float SphercastRadius = 1;
@@ -20,10 +22,16 @@ public class PlayerGraber : MonoBehaviour
     private bool CanGrabBool = false;
     public Vector3 rayOrigin;
     public Player_Movement player_Movement;
-
+    private float ChoppBarValue;
+    private float targetBarValue;
     void Update()
     {
         PickupHandeler();
+
+        ChoppBarValue = Mathf.Lerp(ChoppBarValue, targetBarValue, Time.deltaTime * 10f);
+
+        TreeChoppBar.fillAmount = ChoppBarValue;
+        if (ChoppBarValue >= 0.9f) targetBarValue = 0.0f;
     }
     void FixedUpdate()
     {
@@ -66,19 +74,24 @@ public class PlayerGraber : MonoBehaviour
                 Interactebole = hit.collider.gameObject;
                 if (Interactebole != null)
                 {
-                    Interactebole.GetComponent<Tree>().choopTree();
+                    Tree TreeScript = Interactebole.GetComponent<Tree>();
+
+                    targetBarValue = 1f - ((float)(TreeScript.treeHP - 1) / TreeScript.maxTreeHP);
+
+                    TreeScript.choopTree();
+
+                    Interactebole = null; // we dont need the Tree gameobject anny more
                 }
             }
         }
     }
-
     void DrawRayForPlayer()
     {
         rayOrigin = transform.position + transform.up * 0.4f;
 
         logStuck_moveModifier = 1;
 
-        if (Interactebole != null && Interactebole.TryGetComponent(out logGrip _) && isGrabbing)
+        if (Interactebole != null && Interactebole.CompareTag("FalenTree") && isGrabbing)
         {
             Vector3 targetPosition = transform.position + transform.TransformDirection(GrabPositionOffset); // this and the row below updated the postition so it moves with the player
 
