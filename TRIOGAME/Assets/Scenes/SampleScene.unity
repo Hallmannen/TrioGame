@@ -576,6 +576,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4696458808921996800, guid: f6551f13e96a7a943816cfb0f18acc46, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: a41b6c5edd9b8d541be19ea43f16fc11, type: 2}
     - target: {fileID: 8003094081198077356, guid: f6551f13e96a7a943816cfb0f18acc46, type: 3}
       propertyPath: m_Name
       value: Arm 1
@@ -765,7 +769,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da602a878a883b64c8e0a3f927e56b14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  PlayingWithControler: 0
+  PlayingWithControler: 1
   maxSpeed: 8
   acceleration: 100
   deceleration: 60
@@ -773,6 +777,10 @@ MonoBehaviour:
   controller: {fileID: 886065411}
   playerGraber: {fileID: 886065415}
   Ani: {fileID: 886065418}
+  waterMask:
+    serializedVersion: 2
+    m_Bits: 80
+  waterSplash: {fileID: 2282133961609983860, guid: 14ecf523401ae5840a7e6909f309d934, type: 3}
 --- !u!143 &886065411
 CharacterController:
   m_ObjectHideFlags: 0
@@ -895,6 +903,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerGraber
   TreeChoppBar: {fileID: 1133809168}
+  gradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 0.4785439, b: 0, a: 0.5176471}
+    key1: {r: 1, g: 0.5160201, b: 0.04294967, a: 1}
+    key2: {r: 1, g: 0.9610191, b: 0.5529412, a: 1}
+    key3: {r: 0.21981698, g: 0.99844074, b: 0.099098936, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 17733
+    ctime2: 39707
+    ctime3: 65535
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 5012
+    atime1: 26214
+    atime2: 65535
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: 0
+    m_NumColorKeys: 4
+    m_NumAlphaKeys: 3
+  ChoppPartical: {fileID: 4694534026176487067, guid: ad04a3aaab6215945966804fddc35a64, type: 3}
   Grabforce: 50
   GrabRange: 1.5
   SphercastRadius: 0.5
@@ -1164,9 +1203,9 @@ ParticleSystem:
         m_RotationOrder: 4
     startSpeed:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 5
-      minScalar: 5
+      minScalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1666,7 +1705,7 @@ ParticleSystem:
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
     donutRadius: 0.2
-    m_Position: {x: 0, y: 0, z: 0}
+    m_Position: {x: 0, y: 0.48, z: 0}
     m_Rotation: {x: -155.08, y: 0, z: 0}
     m_Scale: {x: 1, y: 1, z: 1}
     placementMode: 0
@@ -1747,7 +1786,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 1
+      value: 0.0001
       mode: 0
       spread: 0
       speed:
@@ -1866,7 +1905,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1.01
+      scalar: 2
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -1919,7 +1958,7 @@ ParticleSystem:
     rateOverDistance:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1.36
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -10718,6 +10757,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4696458808921996800, guid: f6551f13e96a7a943816cfb0f18acc46, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: a41b6c5edd9b8d541be19ea43f16fc11, type: 2}
     - target: {fileID: 8003094081198077356, guid: f6551f13e96a7a943816cfb0f18acc46, type: 3}
       propertyPath: m_Name
       value: Arm 1 (1)
@@ -11708,6 +11751,10 @@ MonoBehaviour:
   MainCamera: {fileID: 1479509427}
   Players:
   - {fileID: 886065405}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &2101122955
 GameObject:
   m_ObjectHideFlags: 0

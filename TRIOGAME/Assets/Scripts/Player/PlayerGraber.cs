@@ -79,7 +79,7 @@ public class PlayerGraber : MonoBehaviour
                 Interactebole = hit.collider.gameObject;
                 if (Interactebole != null)
                 {
-                    GameObject newPartical = Instantiate(ChoppPartical, hit.point, transform.rotation);
+                    GameObject newPartical = Instantiate(ChoppPartical, hit.point + new Vector3(0, 1, 0), transform.rotation);
                     Destroy(newPartical, 6);
 
                     Tree TreeScript = Interactebole.GetComponent<Tree>();

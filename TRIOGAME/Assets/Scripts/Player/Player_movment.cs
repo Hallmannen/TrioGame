@@ -4,6 +4,7 @@ public class Player_Movement : MonoBehaviour
 {
     public bool PlayingWithControler = false;
     [Space]
+    [Header("Movment")]
     public float maxSpeed = 6f;
     public float acceleration = 15f;
     public float deceleration = 20f;
@@ -70,6 +71,11 @@ public class Player_Movement : MonoBehaviour
 
         controller.SimpleMove(PlayerPosition * playerGraber.logStuck_moveModifier);
     }
+    [Space]
+    [Header("water stuff")]
+    [SerializeField] private LayerMask waterMask;
+    private bool inWater = true;
+    public GameObject waterSplash;
 
     private void Update()
     {
@@ -85,6 +91,22 @@ public class Player_Movement : MonoBehaviour
         }
 
         // chopp tree animation is called from playerGraber
+        if (Physics.Raycast(transform.position, -transform.up, out RaycastHit waterRay, 1.5f, waterMask) && waterRay.collider.CompareTag("Water"))
+        {
+            if (!inWater)
+            {
+                Destroy(Instantiate(waterSplash, waterRay.point + transform.forward, transform.rotation), 3);
+            }
+            inWater = true;
+        }
+        else
+        {
+            if (inWater)
+            {
+                //Destroy(Instantiate(waterSplash, waterRay.point + transform.forward, transform.rotation), 3);
+            }
+            inWater = false;
+        }
     }
 
 }

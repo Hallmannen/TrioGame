@@ -29,6 +29,7 @@ public class Timer : MonoBehaviour
             {
                 UItext.text = "you are the G.O.A.T and built the thing in time with " + CurrentTime.ToString("0") + " second to spare! :D";
                 UItext.color = Color.green;
+                if (UItext.text != "") Invoke("ereseText", 5);
             }
 
         }
@@ -36,7 +37,13 @@ public class Timer : MonoBehaviour
         {
             UItext.text = "you suck and failed to build the thing in time! >:(";
             UItext.color = Color.red;
-
+            if (UItext.text != "") Invoke("ereseText", 5);
         }
+    }
+
+    void ereseText()
+    {
+        enabled = false;
+        UItext.text = "";
     }
 }
