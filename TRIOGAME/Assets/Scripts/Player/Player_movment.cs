@@ -11,6 +11,10 @@ public class Player_Movement : MonoBehaviour
     public CharacterController controller;
     private Vector3 PlayerPosition;
     public PlayerGraber playerGraber;
+    private Vector3 targetVelocity;
+    [Space]
+    public Animator Ani;
+
     void FixedUpdate()
     {
         MoveHandeler(); // MovmentHandeler is in Region Handel_Movnent
@@ -34,7 +38,7 @@ public class Player_Movement : MonoBehaviour
             input += Gamepad.current.leftStick.ReadValue();
         }
 
-        Vector3 targetVelocity = new Vector3(input.x, 0, input.y);
+        targetVelocity = new Vector3(input.x, 0, input.y);
 
         // This doesn't make the player move faster diagonally
         if (targetVelocity.magnitude > 1) targetVelocity.Normalize();
@@ -66,4 +70,21 @@ public class Player_Movement : MonoBehaviour
 
         controller.SimpleMove(PlayerPosition * playerGraber.logStuck_moveModifier);
     }
+
+    private void Update()
+    {
+        if(targetVelocity == Vector3.zero)
+        {
+            Ani.SetBool("Walk", false);
+
+        }
+        else
+        {
+            Ani.SetBool("Walk", true);
+
+        }
+
+        // chopp tree animation is called from playerGraber
+    }
+
 }

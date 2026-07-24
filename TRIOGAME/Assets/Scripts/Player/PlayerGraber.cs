@@ -69,16 +69,18 @@ public class PlayerGraber : MonoBehaviour
                     localGrabPoint = Interactebole.transform.InverseTransformPoint(hit.point);
                 }
             }
-            if (!isGrabbing && hit.collider.CompareTag("Tree"))
+            if (!isGrabbing && hit.collider.CompareTag("Tree")) // chopping down tree
             {
                 Interactebole = hit.collider.gameObject;
                 if (Interactebole != null)
                 {
+
                     Tree TreeScript = Interactebole.GetComponent<Tree>();
 
                     targetBarValue = 1f - ((float)(TreeScript.treeHP - 1) / TreeScript.maxTreeHP);
 
                     TreeScript.choopTree();
+                    player_Movement.Ani.Play("ChoppTree"); // chopp tree animation is called;
 
                     Interactebole = null; // we dont need the Tree gameobject anny more
                 }
