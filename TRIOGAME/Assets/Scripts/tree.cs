@@ -28,7 +28,6 @@ public class Tree : MonoBehaviour
             SpawnTreeparts();
             Debug.Log("Chooping down tree! ");
         }
-
     }
     void SpawnTreeparts()
     {

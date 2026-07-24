@@ -1,23 +1,30 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class logGrip : MonoBehaviour
 {
-    public GameObject Player = null;
+    public List<GameObject> players;
     public Rigidbody rigidbody;
-    public float PushForce = 10;
+    public float PushForce;
     void Awake()
     {
-        Player = GameObject.FindGameObjectWithTag("Player");
+        players.Add(GameObject.FindGameObjectWithTag("Player1"));
+        players.Add(GameObject.FindGameObjectWithTag("Player2"));
     }
     void Start()
     {
-        Vector3 direction = transform.position - Player.transform.position;
-        direction.y = 0f; // ignore the y so the tree does not fly uppwoard att al!
-        direction.Normalize();
+        GameObject nerestplayer = GetClosestObject(transform.position, players);
 
-        Vector3 TopOfLog = transform.position + transform.up * (transform.localScale.y * 0.5f);
+        if (nerestplayer != null)
+        {
+            Vector3 direction = transform.position - nerestplayer.transform.position;
+            direction.y = 0f; // ignore the y so the tree does not fly uppwoard att al!
+            direction.Normalize();
 
-        rigidbody.AddForceAtPosition(direction * PushForce, TopOfLog, ForceMode.Impulse);
+            Vector3 TopOfLog = transform.position + transform.up * (transform.localScale.y * 0.5f);
+
+            rigidbody.AddForceAtPosition(direction * PushForce, TopOfLog, ForceMode.Impulse);
+        }
     }
     public void OnPlayerHoldingTree(float Grabforce, Vector3 targetPosition, Vector3 grabPoint)
     {
@@ -30,5 +37,23 @@ public class logGrip : MonoBehaviour
 
         rigidbody.AddForceAtPosition(CurentPos, grabPoint);
     }
+    GameObject GetClosestObject(Vector3 position, List<GameObject> objects)
+    {
+        GameObject closest = null;
+        float closestDistance = Mathf.Infinity;
 
+        foreach (GameObject obj in objects)
+        {
+            if (obj == null) continue;
+
+            float distance = Vector3.SqrMagnitude(obj.transform.position - position);
+
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closest = obj;
+            }
+        }
+        return closest;
+    }
 }
