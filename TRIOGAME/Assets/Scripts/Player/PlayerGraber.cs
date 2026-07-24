@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class PlayerGraber : MonoBehaviour
 {
     public Image TreeChoppBar;
+    public Gradient gradient;
+    public GameObject ChoppPartical;
+    [Space]
     public float Grabforce = 20f;
     public float GrabRange = 1f;
     public float SphercastRadius = 1;
@@ -32,6 +35,8 @@ public class PlayerGraber : MonoBehaviour
 
         TreeChoppBar.fillAmount = ChoppBarValue;
         if (ChoppBarValue >= 0.9f) targetBarValue = 0.0f;
+
+        TreeChoppBar.color = gradient.Evaluate(TreeChoppBar.fillAmount);
     }
     void FixedUpdate()
     {
@@ -74,6 +79,8 @@ public class PlayerGraber : MonoBehaviour
                 Interactebole = hit.collider.gameObject;
                 if (Interactebole != null)
                 {
+                    GameObject newPartical = Instantiate(ChoppPartical, hit.point, transform.rotation);
+                    Destroy(newPartical, 6);
 
                     Tree TreeScript = Interactebole.GetComponent<Tree>();
 
