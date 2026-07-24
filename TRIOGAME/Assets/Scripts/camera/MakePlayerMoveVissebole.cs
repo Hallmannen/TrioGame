@@ -1,12 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class FolowCamera : MonoBehaviour
+public class MakePlayerMoveVissebole : MonoBehaviour
 {
-    public Transform[] players;
+    public List<Transform> players;
     public float Transparecy = 0.5f;
     public float TransparentrayYoffset = 2f;
-    private List<Renderer> transparentObjects = new List<Renderer>();
+    private readonly List<Renderer> transparentObjects;
     void LateUpdate()
     {
         // set the alpha value of all the trees the rays from the camera to the player hit

@@ -4,7 +4,6 @@ using UnityEngine.UI;
 public class Timer : MonoBehaviour
 {
     public Text UItext;
-
     public float startTime;
     public float CurrentTime;
 
@@ -18,7 +17,7 @@ public class Timer : MonoBehaviour
     void Update()
     {
 
-        if(CurrentTime > 0)
+        if (CurrentTime > 0)
         {
             if (!BM.AllBuildingsBuilt)
             {
