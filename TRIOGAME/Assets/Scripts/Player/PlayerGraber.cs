@@ -27,15 +27,36 @@ public class PlayerGraber : MonoBehaviour
     public Player_Movement player_Movement;
     private float ChoppBarValue;
     private float targetBarValue;
+    public float TimeAfterLastChopp; // the time it takes for the Chopp  bar to diseper after last Chopp
+    private float EndTimer;
+    private float LastChoppBarVlue;
+
+    void Start()
+    {
+        EndTimer = TimeAfterLastChopp;
+    }
     void Update()
     {
+        LastChoppBarVlue = ChoppBarValue;
         PickupHandeler();
 
         ChoppBarValue = Mathf.Lerp(ChoppBarValue, targetBarValue, Time.deltaTime * 10f);
 
-        TreeChoppBar.fillAmount = ChoppBarValue;
-        if (ChoppBarValue >= 0.9f) targetBarValue = 0.0f;
+        if (ChoppBarValue == LastChoppBarVlue) targetBarValue = 0.0f;
 
+        TreeChoppBar.fillAmount = ChoppBarValue;
+        if (ChoppBarValue >= 0.9f)
+        {
+            if (EndTimer <= 0)
+            {
+                targetBarValue = 0.0f;
+                EndTimer = TimeAfterLastChopp;
+            }
+            else
+            {
+                EndTimer -= 1f * Time.deltaTime;
+            }
+        }
         TreeChoppBar.color = gradient.Evaluate(TreeChoppBar.fillAmount);
     }
     void FixedUpdate()
@@ -106,11 +127,11 @@ public class PlayerGraber : MonoBehaviour
 
             worldGrabPoint = Interactebole.transform.TransformPoint(localGrabPoint);
 
-            CalculateLogStuckMoveModifier();
+            CalculateLogStuckMoveModifier(); // Interactebole can be null here!!!
 
             Debug.DrawLine(rayOrigin, worldGrabPoint, Color.red); // added a debug så we can se where the player has grabd the tree
 
-            Interactebole.GetComponent<logGrip>().OnPlayerHoldingTree(Grabforce, targetPosition, worldGrabPoint); // here i say where the log huld go
+            if (Interactebole != null) Interactebole.GetComponent<logGrip>().OnPlayerHoldingTree(Grabforce, targetPosition, worldGrabPoint); // here i say where the log huld go
         }
         else if (Interactebole == null && isGrabbing)
         {
@@ -124,7 +145,7 @@ public class PlayerGraber : MonoBehaviour
         logStuck_moveModifier = Mathf.Clamp(logStuck_moveModifier, 0.1f, 1f);
         if (logStuck_moveModifier == 0.1f && CanGrabBool) // to far from log and lossing grip
         {
-            Interact();
+            Interactebole = null;
         }
         CanGrabBool = true;
     }

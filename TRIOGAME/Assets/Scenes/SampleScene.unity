@@ -905,25 +905,25 @@ MonoBehaviour:
   TreeChoppBar: {fileID: 1133809168}
   gradient:
     serializedVersion: 2
-    key0: {r: 1, g: 0.4785439, b: 0, a: 0.5176471}
-    key1: {r: 1, g: 0.5160201, b: 0.04294967, a: 1}
-    key2: {r: 1, g: 0.9610191, b: 0.5529412, a: 1}
-    key3: {r: 0.21981698, g: 0.99844074, b: 0.099098936, a: 0}
+    key0: {r: 0.21981698, g: 0.99844074, b: 0.099098936, a: 1}
+    key1: {r: 0.99510324, g: 1, b: 0, a: 1}
+    key2: {r: 1, g: 0, b: 0.046083212, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
-    ctime1: 17733
-    ctime2: 39707
-    ctime3: 65535
+    ctime1: 30969
+    ctime2: 65535
+    ctime3: 0
     ctime4: 0
     ctime5: 0
     ctime6: 0
     ctime7: 0
-    atime0: 5012
-    atime1: 26214
-    atime2: 65535
+    atime0: 0
+    atime1: 65535
+    atime2: 0
     atime3: 0
     atime4: 0
     atime5: 0
@@ -931,13 +931,13 @@ MonoBehaviour:
     atime7: 0
     m_Mode: 0
     m_ColorSpace: 0
-    m_NumColorKeys: 4
-    m_NumAlphaKeys: 3
+    m_NumColorKeys: 3
+    m_NumAlphaKeys: 2
   ChoppPartical: {fileID: 4694534026176487067, guid: ad04a3aaab6215945966804fddc35a64, type: 3}
   Grabforce: 50
   GrabRange: 1.5
   SphercastRadius: 0.5
-  GrabPositionOffset: {x: 0, y: 1.5, z: 1}
+  GrabPositionOffset: {x: 0, y: 2, z: 1}
   Interactebole: {fileID: 0}
   isGrabbing: 0
   worldGrabPoint: {x: 0, y: 0, z: 0}
@@ -946,6 +946,7 @@ MonoBehaviour:
   logStuck_moveModifier: 1
   rayOrigin: {x: 0, y: 0, z: 0}
   player_Movement: {fileID: 886065410}
+  TimeAfterLastChopp: 0.5
 --- !u!114 &886065417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -961,11 +962,14 @@ MonoBehaviour:
   armLength: 1.2
   leftArm: {fileID: 769318485}
   leftArmGrabingpointoffset: {x: 0, y: 0, z: 0}
-  leftArmOffset: {x: -1.2, y: 1.5, z: 0}
+  leftArmOffset: {x: -0.84, y: 1.5, z: -0.16}
   rigthtArm: {fileID: 824849965}
   rigthArmGrabingpointoffset: {x: 0, y: 0, z: 0}
-  rigthArmOffset: {x: 1.2, y: 1.5, z: 0}
+  rigthArmOffset: {x: 0.84, y: 1.5, z: -0.16}
   playerGraber: {fileID: 886065415}
+  positionSmoothTime: 0.8
+  rotationSpeed: 10
+  lockDistance: 0.2
 --- !u!95 &886065418
 Animator:
   serializedVersion: 7
@@ -11123,7 +11127,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.01
-  far clip plane: 1000
+  far clip plane: 100
   field of view: 60
   orthographic: 1
   orthographic size: 9
@@ -11171,7 +11175,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FolowCamera
   players: []
   Transparecy: 0.5
-  TransparentrayYoffset: 2
+  transparentObjects: []
+  TransparencyYoffset: 1.5
 --- !u!114 &1479509430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11751,10 +11756,6 @@ MonoBehaviour:
   MainCamera: {fileID: 1479509427}
   Players:
   - {fileID: 886065405}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1 &2101122955
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public class Player_Movement : MonoBehaviour
@@ -6,6 +8,7 @@ public class Player_Movement : MonoBehaviour
     [Space]
     [Header("Movment")]
     public float maxSpeed = 6f;
+    private float newmaxSpeed;
     public float acceleration = 15f;
     public float deceleration = 20f;
     public float rotationSpeed = 10f;
@@ -13,9 +16,22 @@ public class Player_Movement : MonoBehaviour
     private Vector3 PlayerPosition;
     public PlayerGraber playerGraber;
     private Vector3 targetVelocity;
+    private float dashTime = 1.5f;
+    public float DashSpeed = 10f;
+    private bool IsSprinting = false;
     [Space]
     public Animator Ani;
+    [Space]
+    [Header("water stuff")]
+    [SerializeField] private LayerMask waterMask;
+    private bool inWater = true;
+    public GameObject waterSplash;
+    private float ChaningDasTimer;
 
+    void Start()
+    {
+        newmaxSpeed = maxSpeed;
+    }
     void FixedUpdate()
     {
         MoveHandeler(); // MovmentHandeler is in Region Handel_Movnent
@@ -25,7 +41,7 @@ public class Player_Movement : MonoBehaviour
         Vector2 input = Vector2.zero;
 
         // Keyboard input
-        if (Keyboard.current != null && PlayingWithControler == false)
+        if (Keyboard.current != null && !PlayingWithControler)
         {
             if (Keyboard.current.wKey.isPressed) input.y += 1;
             if (Keyboard.current.sKey.isPressed) input.y -= 1;
@@ -37,6 +53,26 @@ public class Player_Movement : MonoBehaviour
         if (Gamepad.current != null && PlayingWithControler)
         {
             input += Gamepad.current.leftStick.ReadValue();
+            if (Gamepad.current.buttonEast.isPressed && !IsSprinting)
+            {
+                IsSprinting = true;
+                newmaxSpeed = DashSpeed;
+            }
+        }
+
+        if (IsSprinting)
+        {
+            ChaningDasTimer = dashTime;
+
+            if (ChaningDasTimer <= 0)
+            {
+                newmaxSpeed = maxSpeed;
+                IsSprinting = false;
+            }
+            else
+            {
+                ChaningDasTimer -= 1 * Time.deltaTime;
+            }
         }
 
         targetVelocity = new Vector3(input.x, 0, input.y);
@@ -44,7 +80,7 @@ public class Player_Movement : MonoBehaviour
         // This doesn't make the player move faster diagonally
         if (targetVelocity.magnitude > 1) targetVelocity.Normalize();
 
-        targetVelocity *= maxSpeed;
+        targetVelocity *= newmaxSpeed;
 
         float rate = targetVelocity.magnitude > 0 ? acceleration : deceleration;
 
@@ -71,15 +107,9 @@ public class Player_Movement : MonoBehaviour
 
         controller.SimpleMove(PlayerPosition * playerGraber.logStuck_moveModifier);
     }
-    [Space]
-    [Header("water stuff")]
-    [SerializeField] private LayerMask waterMask;
-    private bool inWater = true;
-    public GameObject waterSplash;
-
     private void Update()
     {
-        if(targetVelocity == Vector3.zero)
+        if (targetVelocity == Vector3.zero)
         {
             Ani.SetBool("Walk", false);
 
@@ -108,5 +138,4 @@ public class Player_Movement : MonoBehaviour
             inWater = false;
         }
     }
-
 }

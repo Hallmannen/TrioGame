@@ -12,6 +12,8 @@ public class PlayerManager : MonoBehaviour
 
         foreach (GameObject Player in Players)
         {
+            if (Player == null) continue;
+
             transparencycamera.players.Add(Player.transform);
             FolowCamera.Targets.Add(Player.transform);
         }
