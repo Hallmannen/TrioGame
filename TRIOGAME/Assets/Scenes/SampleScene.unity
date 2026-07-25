@@ -769,13 +769,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da602a878a883b64c8e0a3f927e56b14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  PlayingWithControler: 1
+  PlayingWithControler: 0
   maxSpeed: 8
   acceleration: 100
   deceleration: 60
   rotationSpeed: 10
   controller: {fileID: 886065411}
   playerGraber: {fileID: 886065415}
+  DashSpeed: 10
   Ani: {fileID: 886065418}
   waterMask:
     serializedVersion: 2
@@ -961,10 +962,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PalyerArmScritp
   armLength: 1.2
   leftArm: {fileID: 769318485}
-  leftArmGrabingpointoffset: {x: 0, y: 0, z: 0}
   leftArmOffset: {x: -0.84, y: 1.5, z: -0.16}
   rigthtArm: {fileID: 824849965}
-  rigthArmGrabingpointoffset: {x: 0, y: 0, z: 0}
   rigthArmOffset: {x: 0.84, y: 1.5, z: -0.16}
   playerGraber: {fileID: 886065415}
   positionSmoothTime: 0.8
