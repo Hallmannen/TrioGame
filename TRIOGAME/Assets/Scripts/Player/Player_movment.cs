@@ -53,11 +53,13 @@ public class Player_Movement : MonoBehaviour
         if (Gamepad.current != null && PlayingWithControler)
         {
             input += Gamepad.current.leftStick.ReadValue();
+            /*
             if (Gamepad.current.buttonEast.isPressed && !IsSprinting)
             {
                 IsSprinting = true;
                 newmaxSpeed = DashSpeed;
             }
+            */
         }
 
         if (IsSprinting)
