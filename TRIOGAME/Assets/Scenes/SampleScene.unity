@@ -431,6 +431,7 @@ Transform:
   m_Children:
   - {fileID: 2059911954}
   - {fileID: 886065409}
+  - {fileID: 367627426}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &253619238
@@ -528,6 +529,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 253619238}
   m_CullTransparentMesh: 1
+--- !u!1 &367627425
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 367627426}
+  - component: {fileID: 367627427}
+  m_Layer: 0
+  m_Name: CameraHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &367627426
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 367627425}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.2588191, y: -0, z: -0, w: 0.9659258}
+  m_LocalPosition: {x: -1.4899998, y: 20.37999, z: -37.98458}
+  m_LocalScale: {x: 1.5418, y: 1.6911999, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1479509428}
+  m_Father: {fileID: 228984242}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &367627427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 367627425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6971bd09b867a9945b4a02c3936d79b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NewMultiTargetCamera
+  Targets:
+  - {fileID: 1819718826}
+  - {fileID: 886065409}
+  offset: {x: 0, y: 19.3, z: -33.5}
+  minZoom: 12
+  maxZoom: 23
+  zoomLimiter: 100
+  camSmothnes: 1
 --- !u!1001 &430409034
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -698,6 +752,52 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &852348995
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 852348997}
+  - component: {fileID: 852348996}
+  m_Layer: 0
+  m_Name: ExplosionTriger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &852348996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852348995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f210350860a7a8d4b99bfea8e03e9e5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  explosion: {fileID: 0}
+  cameraShake: {fileID: 1479509431}
+--- !u!4 &852348997
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852348995}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.80543, y: 0.84307, z: -6.98979}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &880386368 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e6a02de86bbed40449f0de5746a253d8, type: 3}
@@ -10916,7 +11016,7 @@ GameObject:
   - component: {fileID: 1468072732}
   - component: {fileID: 1468072731}
   - component: {fileID: 1468072730}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Ground (1)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -11029,7 +11129,7 @@ GameObject:
   - component: {fileID: 1479509426}
   - component: {fileID: 1479509425}
   - component: {fileID: 1479509429}
-  - component: {fileID: 1479509430}
+  - component: {fileID: 1479509431}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -11148,12 +11248,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1479509424}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2588191, y: -0, z: -0, w: 0.9659258}
-  m_LocalPosition: {x: -14.4, y: 21.22305, z: -38}
-  m_LocalScale: {x: 1.5418, y: 1.6912, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 367627426}
   m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
 --- !u!114 &1479509429
 MonoBehaviour:
@@ -11171,7 +11271,7 @@ MonoBehaviour:
   Transparecy: 0.5
   transparentObjects: []
   TransparencyYoffset: 1.5
---- !u!114 &1479509430
+--- !u!114 &1479509431
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11180,16 +11280,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1479509424}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6971bd09b867a9945b4a02c3936d79b0, type: 3}
+  m_Script: {fileID: 11500000, guid: fcd6a44b23de00847ab17601d0f2f0aa, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NewMultiTargetCamera
-  Targets:
-  - {fileID: 1819718826}
-  offset: {x: 0, y: 19.3, z: -33.5}
-  minZoom: 12
-  maxZoom: 23
-  zoomLimiter: 100
-  camSmothnes: 1
+  m_EditorClassIdentifier: '::'
 --- !u!1 &1594936201
 GameObject:
   m_ObjectHideFlags: 0
@@ -16673,7 +16766,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 228984242}
-  - {fileID: 1479509428}
   - {fileID: 1816079979}
   - {fileID: 1783902}
   - {fileID: 1468072733}
@@ -16685,3 +16777,4 @@ SceneRoots:
   - {fileID: 1883255435}
   - {fileID: 65743676}
   - {fileID: 953749676}
+  - {fileID: 852348997}

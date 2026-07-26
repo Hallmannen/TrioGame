@@ -4,6 +4,8 @@ public class treeFallDMG : MonoBehaviour
 {
     public GameObject groundPartical;
     public GameObject treeHitPartical;
+    public GameObject playerHitPartical;
+
 
     private CameraShake cameraShake;
     private void OnEnable()
@@ -33,6 +35,11 @@ public class treeFallDMG : MonoBehaviour
             Destroy(newPartical, 6);
             StartCoroutine(cameraShake.Shake(.1f, .1f));
         }
+        if (collision.collider.CompareTag("Player") && enabled)
+        {
+
+        }
+
 
     }
 
