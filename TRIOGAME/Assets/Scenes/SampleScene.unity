@@ -431,7 +431,6 @@ Transform:
   m_Children:
   - {fileID: 2059911954}
   - {fileID: 886065409}
-  - {fileID: 367627426}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &253619238
@@ -555,12 +554,12 @@ Transform:
   m_GameObject: {fileID: 367627425}
   serializedVersion: 2
   m_LocalRotation: {x: 0.2588191, y: -0, z: -0, w: 0.9659258}
-  m_LocalPosition: {x: -1.4899998, y: 20.37999, z: -37.98458}
+  m_LocalPosition: {x: -14.4, y: 21.22305, z: -38}
   m_LocalScale: {x: 1.5418, y: 1.6911999, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1479509428}
-  m_Father: {fileID: 228984242}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &367627427
 MonoBehaviour:
@@ -829,7 +828,7 @@ GameObject:
   - component: {fileID: 886065419}
   m_Layer: 0
   m_Name: Player 1
-  m_TagString: Player1
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -864,7 +863,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da602a878a883b64c8e0a3f927e56b14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  PlayingWithControler: 1
+  PlayingWithControler: 0
   maxSpeed: 8
   acceleration: 100
   deceleration: 60
@@ -877,6 +876,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 80
   waterSplash: {fileID: 2282133961609983860, guid: 14ecf523401ae5840a7e6909f309d934, type: 3}
+  StunedPartical: {fileID: 9137592580533809480, guid: 31323996e18243749a0db40faf41d920, type: 3}
 --- !u!143 &886065411
 CharacterController:
   m_ObjectHideFlags: 0
@@ -11016,7 +11016,7 @@ GameObject:
   - component: {fileID: 1468072732}
   - component: {fileID: 1468072731}
   - component: {fileID: 1468072730}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground (1)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -16766,6 +16766,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 228984242}
+  - {fileID: 367627426}
   - {fileID: 1816079979}
   - {fileID: 1783902}
   - {fileID: 1468072733}
