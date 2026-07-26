@@ -149,11 +149,11 @@ public class Player_Movement : MonoBehaviour
                 // chopp tree animation is called from playerGraber
             if (Physics.Raycast(transform.position, -transform.up, out RaycastHit waterRay, 1.5f, waterMask) && waterRay.collider.CompareTag("Water"))
             {
-            if (!inWater)
-            {
-                Destroy(Instantiate(waterSplash, waterRay.point + transform.forward, transform.rotation), 3);
-            }
-            inWater = true;
+                if (!inWater)
+                {
+                    Destroy(Instantiate(waterSplash, waterRay.point + transform.forward, transform.rotation), 3);
+                }
+                inWater = true;
             }
             else 
             {
