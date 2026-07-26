@@ -8,8 +8,7 @@ public class logGrip : MonoBehaviour
     public float PushForce;
     void Awake()
     {
-        players.Add(GameObject.FindGameObjectWithTag("Player1"));
-        players.Add(GameObject.FindGameObjectWithTag("Player2"));
+        players.Add(GameObject.FindGameObjectWithTag("Player"));
     }
     void Start()
     {

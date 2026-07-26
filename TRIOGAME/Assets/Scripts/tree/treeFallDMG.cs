@@ -4,7 +4,6 @@ public class treeFallDMG : MonoBehaviour
 {
     public GameObject groundPartical;
     public GameObject treeHitPartical;
-    public GameObject playerHitPartical;
 
 
     private CameraShake cameraShake;
@@ -37,7 +36,7 @@ public class treeFallDMG : MonoBehaviour
         }
         if (collision.collider.CompareTag("Player") && enabled)
         {
-
+            collision.collider.GetComponent<Player_Movement>().stunPlayer(2);
         }
 
 

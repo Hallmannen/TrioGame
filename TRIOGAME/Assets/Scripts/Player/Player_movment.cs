@@ -27,14 +27,20 @@ public class Player_Movement : MonoBehaviour
     private bool inWater = true;
     public GameObject waterSplash;
     private float ChaningDasTimer;
-
+    [Space]
+    public GameObject StunedPartical;
+    private float StunedTime = 0;
+    private bool isStunned = false;
     void Start()
     {
         newmaxSpeed = maxSpeed;
     }
     void FixedUpdate()
     {
-        MoveHandeler(); // MovmentHandeler is in Region Handel_Movnent
+        if (!isStunned)
+        {
+            MoveHandeler(); // MovmentHandeler is in Region Handel_Movnent
+        }
     }
     void MoveHandeler()
     {
@@ -111,6 +117,7 @@ public class Player_Movement : MonoBehaviour
     }
     private void Update()
     {
+        #region water stuff
         if (targetVelocity == Vector3.zero)
         {
             Ani.SetBool("Walk", false);
@@ -139,5 +146,23 @@ public class Player_Movement : MonoBehaviour
             }
             inWater = false;
         }
+        #endregion
+
+        if (StunedTime > 0)
+        {
+            if (!isStunned)
+            {
+                Destroy(Instantiate(StunedPartical, transform.position + new Vector3(0, 3, 0), Quaternion.identity), StunedTime);
+            }
+            isStunned = true;
+        }
+        else isStunned = false;
+        StunedTime -= Time.deltaTime;
     }
+
+    public void stunPlayer(float stunTime)
+    {
+        StunedTime = stunTime;
+    }
+
 }
