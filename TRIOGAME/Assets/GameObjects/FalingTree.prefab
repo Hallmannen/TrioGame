@@ -9858,11 +9858,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29d349f482f6bc84fa93ac1be8ba33ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::logGrip
-  players:
-  - {fileID: 0}
-  - {fileID: 0}
+  players: []
   rigidbody: {fileID: -1486579963403110666}
   PushForce: -1.5
+  playerManager: {fileID: 0}
 --- !u!54 &-1486579963403110666
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -8,14 +8,14 @@ public class PlayerManager : MonoBehaviour
     void Awake()
     {
         MakePlayerMoveVissebole transparencycamera = MainCamera.GetComponent<MakePlayerMoveVissebole>();
-        NewMultiTargetCamera FolowCamera = MainCamera.GetComponent<NewMultiTargetCamera>();
+        NewMultiTargetCamera FolowCamera = MainCamera.GetComponentInParent<NewMultiTargetCamera>();
 
         foreach (GameObject Player in Players)
         {
             if (Player == null) continue;
 
             transparencycamera.players.Add(Player.transform);
-            //FolowCamera.Targets.Add(Player.transform);
+            FolowCamera.Targets.Add(Player.transform);
         }
     }
 }

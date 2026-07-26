@@ -780,8 +780,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f210350860a7a8d4b99bfea8e03e9e5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  explosion: {fileID: 0}
-  cameraShake: {fileID: 1479509431}
 --- !u!4 &852348997
 Transform:
   m_ObjectHideFlags: 0
@@ -863,7 +861,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da602a878a883b64c8e0a3f927e56b14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  PlayingWithControler: 0
+  PlayingWithControler: 1
   maxSpeed: 8
   acceleration: 100
   deceleration: 60

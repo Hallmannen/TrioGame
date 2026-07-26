@@ -59,13 +59,6 @@ public class Player_Movement : MonoBehaviour
         if (Gamepad.current != null && PlayingWithControler)
         {
             input += Gamepad.current.leftStick.ReadValue();
-            /*
-            if (Gamepad.current.buttonEast.isPressed && !IsSprinting)
-            {
-                IsSprinting = true;
-                newmaxSpeed = DashSpeed;
-            }
-            */
         }
 
         if (IsSprinting)
@@ -130,6 +123,7 @@ public class Player_Movement : MonoBehaviour
         }
 
         // chopp tree animation is called from playerGraber
+
         if (Physics.Raycast(transform.position, -transform.up, out RaycastHit waterRay, 1.5f, waterMask) && waterRay.collider.CompareTag("Water"))
         {
             if (!inWater)
