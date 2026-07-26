@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEditor.Timeline;
 using UnityEngine;
 
@@ -64,7 +65,6 @@ public class PalyerArmScritp : MonoBehaviour
         if (!playerGraber.isGrabbing)
         {
             Quaternion idleRot = Quaternion.LookRotation(transform.forward);
-
             // Left arm
             leftArm.transform.position = Vector3.SmoothDamp(leftArm.transform.position, leftshoulderPos, ref leftArmVelocity, positionSmoothTime * Time.deltaTime);
 
@@ -89,6 +89,9 @@ public class PalyerArmScritp : MonoBehaviour
             // TargetPosition
             Vector3 leftTargetPos = handPos - directionleftarm * armLength;
             Vector3 rightTargetPos = handPos - directionrigtharm * armLength;
+
+            Debug.DrawLine(leftTargetPos, leftshoulderPos, Color.red);
+            Debug.DrawLine(rightTargetPos, rightShoulderPos, Color.red);
 
             // Left arm
             if (!leftHandLocked)

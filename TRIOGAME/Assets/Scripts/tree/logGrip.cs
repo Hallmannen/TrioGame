@@ -6,12 +6,17 @@ public class logGrip : MonoBehaviour
     public List<GameObject> players;
     public Rigidbody rigidbody;
     public float PushForce;
-    void Awake()
-    {
-        players.Add(GameObject.FindGameObjectWithTag("Player"));
-    }
+    public PlayerManager playerManager;
     void Start()
     {
+        playerManager = FindAnyObjectByType<PlayerManager>();
+
+        foreach (GameObject player in playerManager.Players)
+        {
+            if (player == null) continue;
+            players.Add(player);
+        }
+
         GameObject nerestplayer = GetClosestObject(transform.position, players);
 
         if (nerestplayer != null)
