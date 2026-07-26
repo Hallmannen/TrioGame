@@ -5,6 +5,12 @@ public class treeFallDMG : MonoBehaviour
     public GameObject groundPartical;
     public GameObject treeHitPartical;
 
+    private CameraShake cameraShake;
+    private void OnEnable()
+    {
+        cameraShake = FindAnyObjectByType<CameraShake>();
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.CompareTag("Ground") && enabled)
@@ -13,7 +19,9 @@ public class treeFallDMG : MonoBehaviour
             Vector3 point = contact.point;
             GameObject newPartical = Instantiate(groundPartical, point, Quaternion.identity);
             Destroy(newPartical, 6);
+            StartCoroutine(cameraShake.Shake(.1f, .1f));
             enabled = false;
+
         }
         if (collision.collider.CompareTag("Tree") && enabled)
         {
@@ -23,6 +31,7 @@ public class treeFallDMG : MonoBehaviour
             Vector3 point = contact.point;
             GameObject newPartical = Instantiate(treeHitPartical, point, Quaternion.identity);
             Destroy(newPartical, 6);
+            StartCoroutine(cameraShake.Shake(.1f, .1f));
         }
 
     }

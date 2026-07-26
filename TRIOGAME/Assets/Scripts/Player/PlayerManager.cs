@@ -15,7 +15,7 @@ public class PlayerManager : MonoBehaviour
             if (Player == null) continue;
 
             transparencycamera.players.Add(Player.transform);
-            FolowCamera.Targets.Add(Player.transform);
+            //FolowCamera.Targets.Add(Player.transform);
         }
     }
 }

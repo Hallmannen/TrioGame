@@ -546,7 +546,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e6a02de86bbed40449f0de5746a253d8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.16
+      value: -0.14
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e6a02de86bbed40449f0de5746a253d8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -961,7 +961,7 @@ MonoBehaviour:
   rigthtArm: {fileID: 880386368}
   rigthArmOffset: {x: 0.79, y: 1.5, z: -0.16}
   playerGraber: {fileID: 886065415}
-  positionSmoothTime: 0.8
+  positionSmoothTime: 12
   rotationSpeed: 10
   lockDistance: 0.2
 --- !u!95 &886065418
@@ -10857,7 +10857,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 430d19e36151e9f42a953832b4249019, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.84
+      value: -0.78
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 430d19e36151e9f42a953832b4249019, type: 3}
       propertyPath: m_LocalPosition.y
