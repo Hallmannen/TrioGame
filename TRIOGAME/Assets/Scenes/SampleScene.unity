@@ -877,6 +877,10 @@ MonoBehaviour:
     m_Bits: 80
   waterSplash: {fileID: 2282133961609983860, guid: 14ecf523401ae5840a7e6909f309d934, type: 3}
   StunedPartical: {fileID: 9137592580533809480, guid: 31323996e18243749a0db40faf41d920, type: 3}
+  centerStanding: 1.48
+  hightStanding: 2.7
+  centerSwiming: 0.66
+  hightSwiming: 1.37
 --- !u!143 &886065411
 CharacterController:
   m_ObjectHideFlags: 0
@@ -11572,7 +11576,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 2
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.907

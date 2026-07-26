@@ -24,16 +24,24 @@ public class Player_Movement : MonoBehaviour
     [Space]
     [Header("water stuff")]
     [SerializeField] private LayerMask waterMask;
-    private bool inWater = true;
+    public bool inWater = true;
     public GameObject waterSplash;
-    private float ChaningDasTimer;
+    public ParticleSystem SwimingParticle;
+    private float ChangeingDasTimer;
     [Space]
     public GameObject StunedPartical;
     private float StunedTime = 0;
     private bool isStunned = false;
+    [Header("standing/swim Offsets")]
+
+    public float centerStanding, hightStanding;
+    public float centerSwiming, hightSwiming;
+    [Space]
+    private PalyerArmScritp playerArmScript; 
     void Start()
     {
         newmaxSpeed = maxSpeed;
+        playerArmScript = GetComponent<PalyerArmScritp>();
     }
     void FixedUpdate()
     {
@@ -70,16 +78,16 @@ public class Player_Movement : MonoBehaviour
 
         if (IsSprinting)
         {
-            ChaningDasTimer = dashTime;
+            ChangeingDasTimer = dashTime;
 
-            if (ChaningDasTimer <= 0)
+            if (ChangeingDasTimer <= 0)
             {
                 newmaxSpeed = maxSpeed;
                 IsSprinting = false;
             }
             else
             {
-                ChaningDasTimer -= 1 * Time.deltaTime;
+                ChangeingDasTimer -= 1 * Time.deltaTime;
             }
         }
 
@@ -128,24 +136,44 @@ public class Player_Movement : MonoBehaviour
             Ani.SetBool("Walk", true);
 
         }
-
-        // chopp tree animation is called from playerGraber
-        if (Physics.Raycast(transform.position, -transform.up, out RaycastHit waterRay, 1.5f, waterMask) && waterRay.collider.CompareTag("Water"))
+        if (inWater)
         {
+            Ani.Play("Swim");
+            controller.center = new Vector3(0, centerSwiming, 0);
+            controller.height = hightSwiming;
+            SwimingParticle.enableEmission = true;
+
+        }
+        else
+        {
+            SwimingParticle.enableEmission = false;
+            controller.center = new Vector3(0, centerStanding, 0);
+            controller.height = hightStanding;
+        }
+
+        if (targetVelocity != Vector3.zero)
+        {
+                // chopp tree animation is called from playerGraber
+            if (Physics.Raycast(transform.position, -transform.up, out RaycastHit waterRay, 1.5f, waterMask) && waterRay.collider.CompareTag("Water"))
+            {
             if (!inWater)
             {
                 Destroy(Instantiate(waterSplash, waterRay.point + transform.forward, transform.rotation), 3);
             }
             inWater = true;
-        }
-        else
-        {
-            if (inWater)
-            {
-                //Destroy(Instantiate(waterSplash, waterRay.point + transform.forward, transform.rotation), 3);
             }
-            inWater = false;
+            else 
+            {
+                if (inWater)
+                {
+                    Destroy(Instantiate(waterSplash, transform.position, transform.rotation), 3);
+                    Ani.Play("Idle");
+                }
+                inWater = false;
+            }
+
         }
+
         #endregion
 
         if (StunedTime > 0)

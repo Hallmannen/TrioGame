@@ -9,6 +9,7 @@ public class PalyerArmScritp : MonoBehaviour
     [Space]
     public GameObject leftArm;
     public Vector3 leftArmOffset;
+    public Vector3 leftArmOffset_inWater;
     private Vector3 leftArmVelocity;
     private Vector3 directionleftarm;
     private bool leftHandLocked = false;
@@ -17,6 +18,7 @@ public class PalyerArmScritp : MonoBehaviour
     [Space]
     public GameObject rigthtArm;
     public Vector3 rigthArmOffset;
+    public Vector3 rigthArmOffset_inWater;
     private Vector3 rightArmVelocity;
     private Vector3 directionrigtharm;
     private bool rightHandLocked = false;
@@ -29,10 +31,27 @@ public class PalyerArmScritp : MonoBehaviour
     public float rotationSpeed = 12f;
     public float lockDistance = 0.02f; // 2 cm
     private bool wasGrabbing = false;
+    [Space]
+    public Player_Movement playerMovment;
     void Update()
     {
-        Vector3 leftshoulderPos = transform.TransformPoint(leftArmOffset);
-        Vector3 rightShoulderPos = transform.TransformPoint(rigthArmOffset);
+        Vector3 trueLeftArmOffset = Vector3.zero;
+        Vector3 trueRigthArmOffset = Vector3.zero;
+        if (playerMovment.inWater)
+        {
+            trueLeftArmOffset = leftArmOffset_inWater;
+            trueRigthArmOffset = rigthArmOffset_inWater;
+        }
+        else
+        {
+            trueLeftArmOffset = leftArmOffset;
+            trueRigthArmOffset = rigthArmOffset;
+        }
+
+
+
+        Vector3 leftshoulderPos = transform.TransformPoint(trueLeftArmOffset);
+        Vector3 rightShoulderPos = transform.TransformPoint(trueRigthArmOffset);
 
         if (playerGraber.isGrabbing && !wasGrabbing)
         {

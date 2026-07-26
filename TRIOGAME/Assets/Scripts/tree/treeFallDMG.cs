@@ -36,7 +36,7 @@ public class treeFallDMG : MonoBehaviour
         }
         if (collision.collider.CompareTag("Player") && enabled)
         {
-            collision.collider.GetComponent<Player_Movement>().stunPlayer(2);
+            collision.collider.GetComponent<Player_Movement>().stunPlayer(1.5f);
         }
 
 
