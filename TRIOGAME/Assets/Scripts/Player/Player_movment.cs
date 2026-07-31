@@ -37,7 +37,7 @@ public class Player_Movement : MonoBehaviour
     public float centerStanding, hightStanding;
     public float centerSwiming, hightSwiming;
     [Space]
-    private PalyerArmScritp playerArmScript; 
+    private PalyerArmScritp playerArmScript;
     void Start()
     {
         newmaxSpeed = maxSpeed;
@@ -84,7 +84,7 @@ public class Player_Movement : MonoBehaviour
             }
         }
 
-        targetVelocity = new Vector3(input.x, 0, input.y);
+        targetVelocity = Quaternion.Euler(0, 45, 0) * new Vector3(input.x, 0, input.y); // this makes the player move in the rigth direction!
 
         // This doesn't make the player move faster diagonally
         if (targetVelocity.magnitude > 1) targetVelocity.Normalize();
@@ -146,7 +146,7 @@ public class Player_Movement : MonoBehaviour
 
         if (targetVelocity != Vector3.zero)
         {
-                // chopp tree animation is called from playerGraber
+            // chopp tree animation is called from playerGraber
             if (Physics.Raycast(transform.position, -transform.up, out RaycastHit waterRay, 1.5f, waterMask) && waterRay.collider.CompareTag("Water"))
             {
                 if (!inWater)
@@ -155,7 +155,7 @@ public class Player_Movement : MonoBehaviour
                 }
                 inWater = true;
             }
-            else 
+            else
             {
                 if (inWater)
                 {

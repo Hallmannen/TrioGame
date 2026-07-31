@@ -31,7 +31,7 @@ public class Tree : MonoBehaviour
     }
     void SpawnTreeparts()
     {
-        Instantiate(treeStumpObj, treeStump.position, Quaternion.Euler(0, 45, 0));
-        Instantiate(falingTreeObj, transform.position + transform.up, Quaternion.Euler(0, 45, 0));
+        Instantiate(treeStumpObj, treeStump.position, Quaternion.Euler(0, 0, 0));
+        Instantiate(falingTreeObj, transform.position + transform.up, Quaternion.Euler(0, 0, 0));
     }
 }

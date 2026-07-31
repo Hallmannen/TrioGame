@@ -110,22 +110,26 @@ public class PlayerGraber : MonoBehaviour
             }
         }
     }
-    void TryGrabing()
+    bool TryGrabing() // return true if you need to change is grabing
     {
         logStuck_moveModifier = 1;
 
-        if (Interactebole == null) return; // cant do anything if Interactebole is null
+        if (Interactebole == null)
+        {
+            isGrabbing = false;
+            return false; // cant do anything if Interactebole is null
+        }
 
         worldGrabPoint = Interactebole.transform.TransformPoint(localGrabPoint);
         Vector3 targetPosition = transform.position + transform.TransformDirection(GrabPositionOffset);
 
         if (Interactebole.CompareTag("FalenTree")) // Grabes the tree log
         {
-            if (!CheckIfPlayerLostLog()) return; // need to check if the player loses grip of what its holding!
+            if (!CheckIfPlayerLostLog()) return false; // need to check if the player loses grip of what its holding!
 
             Interactebole.GetComponent<logGrip>().OnPlayerHoldingTree(Grabforce, targetPosition, worldGrabPoint); // here i say where the log huld go
 
-            return;
+            return true;
         }
         if (Interactebole.CompareTag("Tree")) // chopping down tree
         {
@@ -140,18 +144,19 @@ public class PlayerGraber : MonoBehaviour
 
             Interactebole = null; // we dont need the Tree gameobject anny more
 
-            return;
+            return false;
         }
+        return false;
     }
     bool CheckIfPlayerLostLog() // if the player loses the girip of what is holding
     {
         float distanceToLog = Vector3.Distance(rayOrigin, worldGrabPoint);
         logStuck_moveModifier = minLogStuckRange / distanceToLog + 1 - distanceToLog / maxLogStuckRange;
         logStuck_moveModifier = Mathf.Clamp(logStuck_moveModifier, 0.1f, 1f);
-        if (logStuck_moveModifier == 0.1f && CanGrabBool) // to far from log and lossing grip
+        if (logStuck_moveModifier == 0.1f) // to far from log and lossing grip
         {
-            Interactebole = null;
             isGrabbing = false;
+            Interactebole = null;
             return false;
         }
         CanGrabBool = true;
@@ -175,7 +180,6 @@ public class PlayerGraber : MonoBehaviour
     void intreact()
     {
         Castray();
-        TryGrabing();
-        ChangeIsGrabbig();
+        if (TryGrabing()) ChangeIsGrabbig();
     }
 }

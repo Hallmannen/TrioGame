@@ -1,45 +1,100 @@
 using System.Collections.Generic;
 using UnityEngine;
-
 public class TreeSpawner : MonoBehaviour
 {
-    public GameObject[] TreePrefabs;
-    public GameObject[] GrassPrefabs;
-    public GameObject[] StonePrefabs;
-    public GameObject[] BigStonePrefab;
+    [Header("Spawn Settings")]
+    public float SpawnNothingChance = 30f;
+    [Space]
+    public SpawnType[] SpawnTypes;
+    [Space]
     public BoxCollider SpawnArea;
     public LayerMask Ground;
+    private List<Vector2> points = new();
+    private List<SpawnedObject> spawnedObjects = new();
     void Start()
     {
-        SpawnAssets(TreePrefabs, 6f); // if you cal spawnAssets you can shose what to spawn and how farapoart the shuld be in a radius
-        SpawnAssets(GrassPrefabs, 1f);
-        SpawnAssets(StonePrefabs, 15f);
-        SpawnAssets(BigStonePrefab, 40f);
+        // Small radius = many possible spawn locations.
+        points = PoissonDiskSampling.GeneratePoints(1f, new Vector2(SpawnArea.size.x, SpawnArea.size.z)); // here are all the spawnpoints chosen
+
+        PrintSpawnChances();
+
+        TrySpawnAssets();
     }
-    void SpawnAssets(GameObject[] preffab, float Radius)
+    void TrySpawnAssets()
     {
-        List<Vector2> points = PoissonDiskSampling.GeneratePoints(Radius, new Vector2(SpawnArea.size.x, SpawnArea.size.z));
+        // Sortera från störst radie till minst.
+        List<SpawnType> sortedTypes = new List<SpawnType>(SpawnTypes);
 
-        foreach (Vector2 point in points)
+        sortedTypes.Sort((a, b) => b.SpawnRadius.CompareTo(a.SpawnRadius));
+
+        foreach (SpawnType type in sortedTypes)
         {
-            Vector3 localPos = new Vector3(point.x - SpawnArea.size.x / 2f, 0, point.y - SpawnArea.size.z / 2f);
+            foreach (Vector2 point in points)
+            {
+                if (Random.Range(0f, 100f) > type.SpawnChance)
+                    continue;
 
-            Vector3 worldPos = SpawnArea.transform.TransformPoint(localPos);
-
-            GameObject tree = preffab[Random.Range(0, preffab.Length)];
-            tree.transform.localEulerAngles = new Vector3(0f, 45f, 0f); // rotates all the thins in the forest 45 degres so it matches with th rest of the world
-            SpawnSingleAssetAtPosition(worldPos, tree);
+                TrySpawn(point, type);
+            }
         }
     }
-    public void SpawnSingleAssetAtPosition(Vector3 SpwanLocatation, GameObject Asset)
+    void PrintSpawnChances()
     {
-        Vector3 rayStart = SpwanLocatation + Vector3.up * 50f;
+        float totalChance = SpawnNothingChance;
 
-        if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, 100f, Ground)) // draw araycast dow to se if there is ground under that it can spawn on
+        foreach (SpawnType type in SpawnTypes)
+            totalChance += type.SpawnChance;
+
+        Debug.Log("------ Spawn Chances ------");
+
+        Debug.Log($"Nothing: {(SpawnNothingChance / totalChance) * 100f:F1}%");
+
+        foreach (SpawnType type in SpawnTypes)
         {
-            Instantiate(Asset, hit.point, Asset.transform.rotation, transform); // spawns the asset att hit.point position and inheret its rotation
+            float percent = (type.SpawnChance / totalChance) * 100f;
+            Debug.Log($"{type.Name}: {percent:F1}%");
         }
+
+        Debug.Log("---------------------------");
     }
+    void TrySpawn(Vector2 point, SpawnType type)
+    {
+        Vector3 localPos = new Vector3(point.x - SpawnArea.size.x / 2f, 0, point.y - SpawnArea.size.z / 2f);
+
+        Vector3 worldPos = SpawnArea.transform.TransformPoint(localPos);
+
+        Vector3 rayStart = worldPos + Vector3.up * 50f;
+
+        if (!Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, 100f, Ground)) return;
+
+        // Check against every object that has already spawned.
+        foreach (SpawnedObject obj in spawnedObjects)
+        {
+            float distance = Vector3.Distance(hit.point, obj.Position);
+
+            if (distance < type.SpawnRadius + obj.Radius) return;
+        }
+
+        GameObject prefab = type.Prefabs[Random.Range(0, type.Prefabs.Length)];
+
+        Instantiate(prefab, hit.point, prefab.transform.rotation, transform);
+
+        spawnedObjects.Add(new SpawnedObject() { Position = hit.point, Radius = type.SpawnRadius });
+    }
+}
+[System.Serializable]
+public class SpawnType
+{
+    public string Name;
+    public GameObject[] Prefabs;
+    public float SpawnRadius = 2f;
+    [Range(0, 100)]
+    public float SpawnChance = 0.5f;
+}
+public class SpawnedObject
+{
+    public Vector3 Position;
+    public float Radius;
 }
 public static class PoissonDiskSampling
 {
@@ -81,8 +136,10 @@ public static class PoissonDiskSampling
                 }
             }
 
-            if (!accepted) spawnPoints.RemoveAt(spawnIndex);
+            if (!accepted)
+                spawnPoints.RemoveAt(spawnIndex);
         }
+
         return points;
     }
 
@@ -109,10 +166,12 @@ public static class PoissonDiskSampling
                     {
                         float sqrDst = (candidate - points[pointIndex]).sqrMagnitude;
 
-                        if (sqrDst < radius * radius) return false;
+                        if (sqrDst < radius * radius)
+                            return false;
                     }
                 }
             }
+
             return true;
         }
 
