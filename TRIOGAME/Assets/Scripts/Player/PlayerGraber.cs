@@ -13,9 +13,8 @@ public class PlayerGraber : MonoBehaviour
     public float GrabRange = 1f;
     public float SphercastRadius = 1;
     public Vector3 GrabPositionOffset = new Vector3(1, 1, 0);
-    public GameObject Interactebole;
+    public GameObject Interactebole = null;
     public bool isGrabbing = false;
-    private RaycastHit hit;
     private Vector3 localGrabPoint;
     public Vector3 worldGrabPoint;
     public float minLogStuckRange = 1;
@@ -37,12 +36,22 @@ public class PlayerGraber : MonoBehaviour
     }
     void Update()
     {
+        rayOrigin = transform.position + transform.up * 0.4f; // update the rayOrigon to the playerposition every frame
+
+        InteractHandeler();
+        ChopBarLogic();
+    }
+    void FixedUpdate()
+    {
+        TryGrabing();
+    }
+    void ChopBarLogic()
+    {
         LastChoppBarVlue = ChoppBarValue;
-        PickupHandeler();
 
-        ChoppBarValue = Mathf.Lerp(ChoppBarValue, targetBarValue, Time.deltaTime * 10f);
+        ChoppBarValue = Mathf.Lerp(ChoppBarValue, targetBarValue, Time.deltaTime * 5f);
 
-        if (ChoppBarValue == LastChoppBarVlue) targetBarValue = 0.0f;
+        if (ChoppBarValue <= LastChoppBarVlue) targetBarValue = 0.0f;
 
         TreeChoppBar.fillAmount = ChoppBarValue;
         if (ChoppBarValue >= 0.9f)
@@ -59,86 +68,82 @@ public class PlayerGraber : MonoBehaviour
         }
         TreeChoppBar.color = gradient.Evaluate(TreeChoppBar.fillAmount);
     }
-    void FixedUpdate()
+    void InteractHandeler() // this need to be in update so it can reliebly se when the player is pressing the e Button
     {
-        DrawRayForPlayer();
-    }
-    void PickupHandeler()
-    {
-        if (Keyboard.current != null && !player_Movement.PlayingWithControler && Keyboard.current.eKey.wasPressedThisFrame) // this need to be in update so it can reliebly se when the player is pressing the e Button
+        //keybord
+        if (!player_Movement.PlayingWithControler && Keyboard.current != null)
         {
-            Interact();
+            if (Keyboard.current.eKey.wasPressedThisFrame)
+            {
+                intreact();
+                return;
+            }
         }
-
-        if (Gamepad.current != null && player_Movement.PlayingWithControler && Gamepad.current.buttonWest.wasPressedThisFrame)
+        //Controler
+        else if (player_Movement.PlayingWithControler && Gamepad.current != null)
         {
-            Interact();
+            if (Gamepad.current.buttonWest.wasPressedThisFrame)
+            {
+                intreact();
+                return;
+            }
         }
     }
     void OnDrawGizmos()
     {
-        if (worldGrabPoint == Vector3.zero) return;
+        if (Interactebole == null) return;
+
         Gizmos.DrawWireSphere(worldGrabPoint, SphercastRadius);
     }
     void Castray()
     {
-        float angle = transform.eulerAngles.y * Mathf.Deg2Rad;
-        Vector3 dir = new Vector3(Mathf.Sin(angle), 0f, Mathf.Cos(angle));
+        Vector3 dir = transform.forward;
 
-        if (Physics.SphereCast(rayOrigin, SphercastRadius, dir, out hit, GrabRange)) // here i is where the ray is created
+        if (Physics.SphereCast(rayOrigin, SphercastRadius, dir, out RaycastHit hit, GrabRange)) // here i is where the ray is created
         {
-            if (!isGrabbing && hit.collider.CompareTag("FalenTree"))
+            Interactebole = hit.collider.gameObject;
+
+            if (Interactebole != null)
             {
-                Interactebole = hit.collider.gameObject;
-                if (Interactebole != null)
-                {
-                    localGrabPoint = Interactebole.transform.InverseTransformPoint(hit.point);
-                }
-            }
-            if (!isGrabbing && hit.collider.CompareTag("Tree")) // chopping down tree
-            {
-                Interactebole = hit.collider.gameObject;
-                if (Interactebole != null)
-                {
-                    GameObject newPartical = Instantiate(ChoppPartical, hit.point + new Vector3(0, 1, 0), transform.rotation);
-                    Destroy(newPartical, 6);
-
-                    Tree TreeScript = Interactebole.GetComponent<Tree>();
-
-                    targetBarValue = 1f - ((float)(TreeScript.treeHP - 1) / TreeScript.maxTreeHP);
-
-                    TreeScript.choopTree();
-                    player_Movement.Ani.Play("ChoppTree"); // chopp tree animation is called;
-
-                    Interactebole = null; // we dont need the Tree gameobject anny more
-                }
+                localGrabPoint = Interactebole.transform.InverseTransformPoint(hit.point);
+                return; // here is Intreactebole the thing The player is trying to grab
             }
         }
     }
-    void DrawRayForPlayer()
+    void TryGrabing()
     {
-        rayOrigin = transform.position + transform.up * 0.4f;
-
         logStuck_moveModifier = 1;
 
-        if (Interactebole != null && Interactebole.CompareTag("FalenTree") && isGrabbing)
+        if (Interactebole == null) return; // cant do anything if Interactebole is null
+
+        worldGrabPoint = Interactebole.transform.TransformPoint(localGrabPoint);
+        Vector3 targetPosition = transform.position + transform.TransformDirection(GrabPositionOffset);
+
+        if (Interactebole.CompareTag("FalenTree")) // Grabes the tree log
         {
-            Vector3 targetPosition = transform.position + transform.TransformDirection(GrabPositionOffset); // this and the row below updated the postition so it moves with the player
+            if (!CheckIfPlayerLostLog()) return; // need to check if the player loses grip of what its holding!
 
-            worldGrabPoint = Interactebole.transform.TransformPoint(localGrabPoint);
+            Interactebole.GetComponent<logGrip>().OnPlayerHoldingTree(Grabforce, targetPosition, worldGrabPoint); // here i say where the log huld go
 
-            CalculateLogStuckMoveModifier(); // Interactebole can be null here!!!
-
-            Debug.DrawLine(rayOrigin, worldGrabPoint, Color.red); // added a debug så we can se where the player has grabd the tree
-
-            if (Interactebole != null) Interactebole.GetComponent<logGrip>().OnPlayerHoldingTree(Grabforce, targetPosition, worldGrabPoint); // here i say where the log huld go
+            return;
         }
-        else if (Interactebole == null && isGrabbing)
+        if (Interactebole.CompareTag("Tree")) // chopping down tree
         {
-            isGrabbing = false;
+            GameObject newPartical = Instantiate(ChoppPartical, worldGrabPoint + Vector3.up, transform.rotation);
+            Destroy(newPartical, 6);
+
+            Tree TreeScript = Interactebole.GetComponent<Tree>();
+
+            targetBarValue = 1f - ((float)(TreeScript.treeHP - 1) / TreeScript.maxTreeHP);
+            TreeScript.choopTree();
+            player_Movement.Ani.Play("ChoppTree"); // chopp tree animation is called;
+
+            Interactebole = null; // we dont need the Tree gameobject anny more
+
+            return;
         }
     }
-    void CalculateLogStuckMoveModifier()
+    bool CheckIfPlayerLostLog() // if the player loses the girip of what is holding
     {
         float distanceToLog = Vector3.Distance(rayOrigin, worldGrabPoint);
         logStuck_moveModifier = minLogStuckRange / distanceToLog + 1 - distanceToLog / maxLogStuckRange;
@@ -146,18 +151,20 @@ public class PlayerGraber : MonoBehaviour
         if (logStuck_moveModifier == 0.1f && CanGrabBool) // to far from log and lossing grip
         {
             Interactebole = null;
+            isGrabbing = false;
+            return false;
         }
         CanGrabBool = true;
+        return true;
     }
     void ChangeIsGrabbig()
     {
+        if (Interactebole == null) return;
+
         if (!isGrabbing)
         {
-            if (Interactebole != null)
-            {
-                isGrabbing = true;
-                CanGrabBool = false;
-            }
+            isGrabbing = true;
+            CanGrabBool = false;
         }
         else
         {
@@ -165,9 +172,10 @@ public class PlayerGraber : MonoBehaviour
             Interactebole = null;
         }
     }
-    void Interact()
+    void intreact()
     {
         Castray();
+        TryGrabing();
         ChangeIsGrabbig();
     }
 }
