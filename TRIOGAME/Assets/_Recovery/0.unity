@@ -956,10 +956,10 @@ MonoBehaviour:
   waterMask:
     serializedVersion: 2
     m_Bits: 80
-  inWater: 0
+  inWater: 1
   waterSplash: {fileID: 2282133961609983860, guid: 14ecf523401ae5840a7e6909f309d934, type: 3}
   SwimingParticle: {fileID: 419777268}
-  StunedPartical: {fileID: 6916944939663258773, guid: 906b1c2dc0aff3f4f87b5ae35aa38059, type: 3}
+  StunedPartical: {fileID: 9137592580533809480, guid: 31323996e18243749a0db40faf41d920, type: 3}
   centerStanding: 1.48
   hightStanding: 2.7
   centerSwiming: 0.95
@@ -10828,7 +10828,7 @@ GameObject:
   - component: {fileID: 1041013899}
   m_Layer: 4
   m_Name: FishSpawner
-  m_TagString: WaterBottom
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11375,7 +11375,7 @@ GameObject:
   - component: {fileID: 1594936203}
   m_Layer: 4
   m_Name: WaterBottom
-  m_TagString: Water
+  m_TagString: WaterBottom
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11877,7 +11877,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83a6b5de21bc8284e92b9bbc43471a90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TreeSpawner
-  SpawnNothingChance: 100
+  SpawnNothingChance: 70
   SpawnTypes:
   - Name: BigStones
     Prefabs:
@@ -11903,10 +11903,46 @@ MonoBehaviour:
     - {fileID: 6113497292521089332, guid: 6c38c717b43c4ae4ab805171c7b70d8d, type: 3}
     SpawnRadius: 0.6
     SpawnChance: 3.8
+  - Name: non
+    Prefabs:
+    - {fileID: 1857727201}
+    SpawnRadius: 0.6
+    SpawnChance: 3.8
   SpawnArea: {fileID: 1839271477}
   Ground:
     serializedVersion: 2
     m_Bits: 64
+--- !u!1 &1857727201
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1857727202}
+  m_Layer: 0
+  m_Name: wdsawd
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1857727202
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1857727201}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -54.04081, y: 1.68611, z: 11.96735}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1883255431
 GameObject:
   m_ObjectHideFlags: 0
@@ -12123,7 +12159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83a6b5de21bc8284e92b9bbc43471a90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TreeSpawner
-  SpawnNothingChance: 100
+  SpawnNothingChance: 70
   SpawnTypes:
   - Name: BigStones
     Prefabs:
@@ -12147,6 +12183,11 @@ MonoBehaviour:
     Prefabs:
     - {fileID: 5373465278287651577, guid: f562d89dcbc0d5a4e9abda2bf6b8e07a, type: 3}
     - {fileID: 6113497292521089332, guid: 6c38c717b43c4ae4ab805171c7b70d8d, type: 3}
+    SpawnRadius: 0.6
+    SpawnChance: 3.8
+  - Name: non
+    Prefabs:
+    - {fileID: 1857727201}
     SpawnRadius: 0.6
     SpawnChance: 3.8
   SpawnArea: {fileID: 2092853344}
@@ -16999,3 +17040,4 @@ SceneRoots:
   - {fileID: 1338938327}
   - {fileID: 1883255435}
   - {fileID: 65743676}
+  - {fileID: 1857727202}

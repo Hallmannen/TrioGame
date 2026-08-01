@@ -31,8 +31,7 @@ public class TreeSpawner : MonoBehaviour
         {
             foreach (Vector2 point in points)
             {
-                if (Random.Range(0f, 100f) > type.SpawnChance)
-                    continue;
+                if (Random.Range(0f, 100f) > type.SpawnChance) continue;
 
                 TrySpawn(point, type);
             }

@@ -122,6 +122,7 @@ public class PlayerGraber : MonoBehaviour
 
         worldGrabPoint = Interactebole.transform.TransformPoint(localGrabPoint);
         Vector3 targetPosition = transform.position + transform.TransformDirection(GrabPositionOffset);
+
         // this ruins every frame while the player is holding a log
         if (Interactebole.CompareTag("FalenTree")) // Grabes the tree log
         {
@@ -157,6 +158,7 @@ public class PlayerGraber : MonoBehaviour
 
             Interactebole.GetComponent<fish>().enabled = false; // disable the fish script so it cant jump anymore
             Interactebole.transform.GetChild(0).gameObject.SetActive(false); // disable the fish child gameobject so it cant swim anymore
+            worldGrabPoint = Interactebole.transform.position; // set the worldgrabpoint to the fish position so the logstuckmovemodifer is corect
 
             Interactebole = null;// we dont need the fish gameobject anny more
             return false;
@@ -164,7 +166,7 @@ public class PlayerGraber : MonoBehaviour
         // this runns every frame while the player is holding a fish
         if (Interactebole.CompareTag("CaughtFish")) // grabbing fish
         {
-            if (!CheckIfPlayerLostObject()) return false; // need to check if the player loses grip of what its holding!
+            worldGrabPoint = Vector3.zero;
 
             Interactebole.transform.position = targetPosition;
 

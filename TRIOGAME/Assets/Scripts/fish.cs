@@ -5,11 +5,22 @@ public class fish : MonoBehaviour
 {
     public Rigidbody rb;
     public float jumpForce = 5f;
-    void Update()
+    private bool isOnGround = true;
+
+    [System.Obsolete]
+    void FixedUpdate()
     {
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        if (isOnGround && Random.Range(0f, 1f) < 0.01f) // 1% chance to jump each frame
         {
             rb.AddForce(Vector3.up * jumpForce);
+            isOnGround = false;
+        }
+    }
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("WaterBottom"))
+        {
+            isOnGround = true;
         }
     }
 }

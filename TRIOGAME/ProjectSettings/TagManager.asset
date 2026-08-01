@@ -8,6 +8,9 @@ TagManager:
   - Water
   - Ground
   - Tree
+  - SwimingFish
+  - CaughtFish
+  - WaterBottom
   layers:
   - Default
   - TransparentFX

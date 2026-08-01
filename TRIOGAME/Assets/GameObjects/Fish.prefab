@@ -68,7 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38182708395904d46bc91766e304d21e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  waterForce: 14
+  waterForce: 10
   waterParticle: {fileID: 1654553070063696217}
 --- !u!198 &1654553070063696217
 ParticleSystem:

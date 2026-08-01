@@ -118,7 +118,32 @@ public class Player_Movement : MonoBehaviour
     }
     private void Update()
     {
+        Debug.DrawRay(transform.position + Vector3.up * 0.5f, -transform.up, Color.red);
         #region water stuff
+
+        if (targetVelocity != Vector3.zero)
+        {
+            // chopp tree animation is called from playerGraber
+            if (Physics.Raycast(transform.position + Vector3.up * 0.5f, -transform.up, out RaycastHit waterRay, 2.5f, waterMask) && waterRay.collider.CompareTag("Water"))
+            {
+                Debug.Log(waterRay.collider.name);
+
+                if (!inWater)
+                {
+                    Destroy(Instantiate(waterSplash, waterRay.point + transform.forward, transform.rotation), 3);
+                }
+                inWater = true;
+            }
+            else
+            {
+                if (inWater)
+                {
+                    Destroy(Instantiate(waterSplash, transform.position, transform.rotation), 3);
+                    Ani.Play("Idle");
+                }
+                inWater = false;
+            }
+        }
         if (targetVelocity == Vector3.zero)
         {
             Ani.SetBool("Walk", false);
@@ -143,30 +168,6 @@ public class Player_Movement : MonoBehaviour
             controller.center = new Vector3(0, centerStanding, 0);
             controller.height = hightStanding;
         }
-
-        if (targetVelocity != Vector3.zero)
-        {
-            // chopp tree animation is called from playerGraber
-            if (Physics.Raycast(transform.position, -transform.up, out RaycastHit waterRay, 1.5f, waterMask) && waterRay.collider.CompareTag("Water"))
-            {
-                if (!inWater)
-                {
-                    Destroy(Instantiate(waterSplash, waterRay.point + transform.forward, transform.rotation), 3);
-                }
-                inWater = true;
-            }
-            else
-            {
-                if (inWater)
-                {
-                    Destroy(Instantiate(waterSplash, transform.position, transform.rotation), 3);
-                    Ani.Play("Idle");
-                }
-                inWater = false;
-            }
-
-        }
-
         #endregion
 
         if (StunedTime > 0)

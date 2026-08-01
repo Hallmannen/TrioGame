@@ -74,7 +74,7 @@ public class PalyerArmScritp : MonoBehaviour
 
             rigthtArm.transform.rotation = Quaternion.Slerp(rigthtArm.transform.rotation, idleRot, rotationSpeed * Time.deltaTime);
         }
-        else // this is if the player is grabing
+        else if (playerGraber.worldGrabPoint != Vector3.zero) // this is if the player is grabing
         {
             Vector3 handPos = playerGraber.worldGrabPoint;
 
