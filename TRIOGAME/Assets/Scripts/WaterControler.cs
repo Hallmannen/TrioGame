@@ -4,7 +4,7 @@ using UnityEngine.ParticleSystemJobs;
 public class WaterControler : MonoBehaviour
 {
     public float waterForce = 20;
-    private Rigidbody logRB;
+    private Rigidbody rb;
     private Transform logTransform;
 
     private Vector3 targetPosition;
@@ -14,8 +14,8 @@ public class WaterControler : MonoBehaviour
 
     void Awake()
     {
-        logRB = GetComponentInParent<Rigidbody>();
-        logTransform = logRB.transform;
+        rb = GetComponentInParent<Rigidbody>();
+        logTransform = rb.transform;
         waterParticle.GetComponent<ParticleSystem>();
     }
     void Update()
@@ -31,7 +31,6 @@ public class WaterControler : MonoBehaviour
 
         forceDir = waterForce * (targetPosition - transform.position).normalized;
     }
-
     private Transform Water;
     private void OnTriggerStay(Collider other)
     {
@@ -39,7 +38,7 @@ public class WaterControler : MonoBehaviour
         {
             Water = other.gameObject.transform;
 
-            logRB.AddForceAtPosition(forceDir, transform.position); //ForceMode.VelocityChange;
+            rb.AddForceAtPosition(forceDir, transform.position); //ForceMode.VelocityChange;
 
             waterParticle.enableEmission = true;
         }

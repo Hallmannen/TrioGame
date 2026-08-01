@@ -135,11 +135,8 @@ public static class PoissonDiskSampling
                     break;
                 }
             }
-
-            if (!accepted)
-                spawnPoints.RemoveAt(spawnIndex);
+            if (!accepted) spawnPoints.RemoveAt(spawnIndex);
         }
-
         return points;
     }
 
@@ -171,10 +168,8 @@ public static class PoissonDiskSampling
                     }
                 }
             }
-
             return true;
         }
-
         return false;
     }
 }

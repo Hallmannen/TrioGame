@@ -36,8 +36,9 @@ public class PalyerArmScritp : MonoBehaviour
     public Player_Movement playerMovment;
     void Update()
     {
-        Vector3 trueLeftArmOffset = Vector3.zero;
-        Vector3 trueRigthArmOffset = Vector3.zero;
+        Vector3 trueLeftArmOffset;
+        Vector3 trueRigthArmOffset;
+
         if (playerMovment.inWater)
         {
             trueLeftArmOffset = leftArmOffset_inWater;
@@ -48,8 +49,6 @@ public class PalyerArmScritp : MonoBehaviour
             trueLeftArmOffset = leftArmOffset;
             trueRigthArmOffset = rigthArmOffset;
         }
-
-
 
         Vector3 leftshoulderPos = transform.TransformPoint(trueLeftArmOffset);
         Vector3 rightShoulderPos = transform.TransformPoint(trueRigthArmOffset);

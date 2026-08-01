@@ -110,7 +110,7 @@ public class PlayerGraber : MonoBehaviour
             }
         }
     }
-    bool TryGrabing() // return true if you need to change is grabing
+    bool TryGrabing() // return true if you need to change is grabing when you are trying to grab something
     {
         logStuck_moveModifier = 1;
 
@@ -122,15 +122,18 @@ public class PlayerGraber : MonoBehaviour
 
         worldGrabPoint = Interactebole.transform.TransformPoint(localGrabPoint);
         Vector3 targetPosition = transform.position + transform.TransformDirection(GrabPositionOffset);
-
+        // this ruins every frame while the player is holding a log
         if (Interactebole.CompareTag("FalenTree")) // Grabes the tree log
         {
-            if (!CheckIfPlayerLostLog()) return false; // need to check if the player loses grip of what its holding!
+            if (!CheckIfPlayerLostObject()) return false; // need to check if the player loses grip of what its holding!
 
             Interactebole.GetComponent<logGrip>().OnPlayerHoldingTree(Grabforce, targetPosition, worldGrabPoint); // here i say where the log huld go
 
+            player_Movement.loockAtObject = true; // make the player look at the log while holding it
+
             return true;
         }
+        // this runns once
         if (Interactebole.CompareTag("Tree")) // chopping down tree
         {
             GameObject newPartical = Instantiate(ChoppPartical, worldGrabPoint + Vector3.up, transform.rotation);
@@ -146,9 +149,33 @@ public class PlayerGraber : MonoBehaviour
 
             return false;
         }
+        // this runns once
+        if (Interactebole.CompareTag("SwimingFish")) // grabbing fish
+        {
+            Interactebole.tag = "CaughtFish";
+            Interactebole.GetComponent<Rigidbody>().AddForce(transform.forward * 20f, ForceMode.Impulse);
+
+            Interactebole.GetComponent<fish>().enabled = false; // disable the fish script so it cant jump anymore
+            Interactebole.transform.GetChild(0).gameObject.SetActive(false); // disable the fish child gameobject so it cant swim anymore
+
+            Interactebole = null;// we dont need the fish gameobject anny more
+            return false;
+        }
+        // this runns every frame while the player is holding a fish
+        if (Interactebole.CompareTag("CaughtFish")) // grabbing fish
+        {
+            if (!CheckIfPlayerLostObject()) return false; // need to check if the player loses grip of what its holding!
+
+            Interactebole.transform.position = targetPosition;
+
+            Interactebole.transform.rotation = transform.rotation;
+
+            player_Movement.loockAtObject = false;
+            return true;
+        }
         return false;
     }
-    bool CheckIfPlayerLostLog() // if the player loses the girip of what is holding
+    bool CheckIfPlayerLostObject() // if the player loses the girip of what is holding
     {
         float distanceToLog = Vector3.Distance(rayOrigin, worldGrabPoint);
         logStuck_moveModifier = minLogStuckRange / distanceToLog + 1 - distanceToLog / maxLogStuckRange;

@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -19,6 +18,7 @@ public class Player_Movement : MonoBehaviour
     private float dashTime = 1.5f;
     public float DashSpeed = 10f;
     private bool IsSprinting = false;
+    public bool loockAtObject = false;
     [Space]
     public Animator Ani;
     [Space]
@@ -96,7 +96,7 @@ public class Player_Movement : MonoBehaviour
         PlayerPosition = Vector3.MoveTowards(PlayerPosition, targetVelocity, rate * Time.deltaTime);
 
         //if the player is holding a log then it shuld look towards the log
-        if (playerGraber.isGrabbing && playerGraber.Interactebole != null && playerGraber.worldGrabPoint != Vector3.zero)
+        if (playerGraber.isGrabbing && playerGraber.Interactebole != null && playerGraber.worldGrabPoint != Vector3.zero && loockAtObject)
         {
             Vector3 direction = playerGraber.worldGrabPoint - transform.position;
             direction.y = 0f; // Ignorera höjdskillnad
